@@ -13,24 +13,7 @@ namespace JoyJoey.Game.UI
     {
         public const string ProcessorName = "joyJoeyMenuStick";
         public const string BindingName = "Joy Joey left stick";
-        static StickInputSettings _settings;
-        static bool _settingsLoaded;
-
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetSettings() { _settings = null; _settingsLoaded = false; }
-
-        public static float DeadzonePercent
-        {
-            get
-            {
-                if (!_settingsLoaded)
-                {
-                    _settings = Resources.Load<StickInputSettings>(StickInputSettings.ResourceName);
-                    _settingsLoaded = true;
-                }
-                return StickInputSettings.SanitizeDeadzonePercent(_settings ? _settings.LeftStickDeadzonePercent : StickInputSettings.DefaultDeadzonePercent);
-            }
-        }
+        public static float DeadzonePercent => GameplayControls.LeftStickDeadzonePercent;
 
         /// <summary>
         /// Configure only a disabled runtime copy, before assigning it to the UI module.

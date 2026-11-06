@@ -53,11 +53,11 @@ namespace JoyJoey.Sandbox.Tests
         }
 
         [Test]
-        public void OneHardwareEventCanAimDashUpAndMovementAndAttackRight()
+        public void VerticalStickInputAimsDashUpWithoutHorizontalMovementOrChangingAttackSectors()
         {
             Pad(new GamepadState { leftStick = Vector2.up }.WithButton(GamepadButton.West).WithButton(GamepadButton.RightShoulder));
             var frame = _input.ConsumeFrame();
-            Direction(frame.Move, Vector2.right);
+            Direction(frame.Move, Vector2.up);
             Direction(Press(frame, ActionId.Basic).Direction, Vector2.right);
             Direction(Press(frame, ActionId.Dash).Direction, Vector2.up);
         }
@@ -69,21 +69,21 @@ namespace JoyJoey.Sandbox.Tests
         [TestCase(240, 0, -1)]
         [TestCase(300, 0, -1)]
         [TestCase(330, 1, 0)]
-        public void NormalStickMovementAndAttackFollowTheThreeSectors(float angle, float x, float y)
+        public void NormalStickAttacksFollowTheThreeSectors(float angle, float x, float y)
         {
             Pad(new GamepadState { leftStick = At(angle) }.WithButton(GamepadButton.West));
             var frame = _input.ConsumeFrame();
-            Direction(frame.Move, new Vector2(x, y));
             Direction(Press(frame, ActionId.Basic).Direction, new Vector2(x, y));
         }
 
         [Test]
-        public void DashSnapshotUsesEightWayAimRatherThanTheWalkingSector()
+        public void DashAndMovementRetainTheDiagonalWhileAttackUsesTheDownSector()
         {
-            Pad(new GamepadState { leftStick = At(55) }.WithButton(GamepadButton.RightShoulder));
+            Pad(new GamepadState { leftStick = At(300) }.WithButton(GamepadButton.RightShoulder).WithButton(GamepadButton.West));
             var frame = _input.ConsumeFrame();
-            Direction(frame.Move, Vector2.right);
-            Direction(Press(frame, ActionId.Dash).Direction, new Vector2(1, 1).normalized);
+            Direction(frame.Move, new Vector2(1, -1).normalized);
+            Direction(Press(frame, ActionId.Dash).Direction, new Vector2(1, -1).normalized);
+            Direction(Press(frame, ActionId.Basic).Direction, Vector2.down);
         }
 
         [Test]
@@ -156,13 +156,13 @@ namespace JoyJoey.Sandbox.Tests
         }
 
         [Test]
-        public void SectorizedMovementResumesImmediatelyWhilePausedButtonsNeedAnotherPress()
+        public void DiagonalMovementResumesImmediatelyWhilePausedButtonsNeedAnotherPress()
         {
             _input.SetGameplayPaused(true);
             Pad(new GamepadState { leftStick = At(130) }.WithButton(GamepadButton.RightShoulder));
             _input.SetGameplayPaused(false);
             var frame = _input.ConsumeFrame();
-            Direction(frame.Move, Vector2.left);
+            Direction(frame.Move, new Vector2(-1, 1).normalized);
             Assert.That(frame.Commands, Is.Empty);
             Pad(new GamepadState { leftStick = At(130) });
             Assert.That(_input.ConsumeFrame().Commands, Is.Empty);

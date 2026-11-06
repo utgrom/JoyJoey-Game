@@ -54,6 +54,84 @@ namespace JoyJoey.Sandbox.Tests
         }
 
         [Test]
+        public void RebindingSwapsWithHiddenActionsAndUpdatesExistingGameplayInput()
+        {
+            var jump = GameplayControls.GetRows(false).Single(row => row.Name == "Saltar");
+            var basic = GameplayControls.GetRows(false).Single(row => row.Name == "Ataque básico");
+            try
+            {
+                GameplayControls.SetActionRevealed(nameof(ActionId.Basic), false);
+                Assert.That(basic.Name, Is.EqualTo("(UNUSED)"));
+                Assert.That(GameplayControls.TryRebind(jump, keyboard.jKey, out string error), Is.True, error);
+
+                Keyboard(Key.J);
+                Assert.That(input.ConsumeFrame().Commands.Single().Action, Is.EqualTo(ActionId.Jump));
+                Keyboard(); input.ConsumeFrame();
+                Keyboard(Key.Space);
+                Assert.That(input.ConsumeFrame().Commands.Single().Action, Is.EqualTo(ActionId.Basic));
+                Keyboard(); input.ConsumeFrame();
+
+                Pad(new GamepadState().WithButton(GamepadButton.South));
+                Assert.That(input.ConsumeFrame().Commands.Single().Action, Is.EqualTo(ActionId.Jump));
+                GameplayControls.SetActionRevealed(nameof(ActionId.Basic), true);
+                Assert.That(basic.Name, Is.EqualTo("Ataque básico"));
+            }
+            finally
+            {
+                GameplayControls.SetActionRevealed(nameof(ActionId.Basic), true);
+                GameplayControls.RestoreDefaults(false, out _);
+            }
+        }
+
+        [Test]
+        public void DpadDirectionAndActionButtonCanSwapWithoutRebindingThePauseButton()
+        {
+            var down = GameplayControls.GetRows(true).Single(row => row.Name == "Abajo");
+            try
+            {
+                Assert.That(GameplayControls.TryRebind(down, pad.startButton, out _), Is.False);
+                Assert.That(GameplayControls.TryRebind(down, keyboard.sKey, out _), Is.False);
+                Assert.That(GameplayControls.TryRebind(down, pad.buttonWest, out string error), Is.True, error);
+
+                Pad(new GamepadState().WithButton(GamepadButton.DpadDown));
+                var attack = input.ConsumeFrame();
+                Assert.That(attack.Move, Is.EqualTo(Vector2.zero));
+                Assert.That(attack.Commands.Single().Action, Is.EqualTo(ActionId.Basic));
+                Pad(new GamepadState()); input.ConsumeFrame();
+
+                Pad(new GamepadState().WithButton(GamepadButton.West));
+                var moved = input.ConsumeFrame();
+                Assert.That(moved.Move, Is.EqualTo(Vector2.down));
+                Assert.That(moved.Commands, Is.Empty);
+            }
+            finally { GameplayControls.RestoreDefaults(true, out _); }
+        }
+
+        [Test]
+        public void GamepadDefaultsResetDeadzoneWithoutRemovingKeyboardOverrides()
+        {
+            var jump = GameplayControls.GetRows(false).Single(row => row.Name == "Saltar");
+            float initialDeadzone = GameplayControls.LeftStickDeadzonePercent;
+            try
+            {
+                Assert.That(GameplayControls.TryRebind(jump, keyboard.tKey, out string rebindError), Is.True, rebindError);
+                Assert.That(GameplayControls.TrySetLeftStickDeadzone(100, out string deadzoneError), Is.True, deadzoneError);
+                Pad(new GamepadState { leftStick = Vector2.right });
+                Assert.That(input.ConsumeFrame().Move, Is.EqualTo(Vector2.zero));
+
+                Assert.That(GameplayControls.RestoreDefaults(true, out string restoreError), Is.True, restoreError);
+                Assert.That(GameplayControls.LeftStickDeadzonePercent, Is.EqualTo(initialDeadzone));
+                Keyboard(Key.T);
+                Assert.That(input.ConsumeFrame().Commands.Single().Action, Is.EqualTo(ActionId.Jump));
+            }
+            finally
+            {
+                GameplayControls.RestoreDefaults(false, out _);
+                GameplayControls.RestoreDefaults(true, out _);
+            }
+        }
+
+        [Test]
         public void PressAndReleaseAreConsumedExactlyOnce()
         {
             Keyboard(Key.J);

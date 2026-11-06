@@ -21,6 +21,8 @@ namespace JoyJoey.Game.UI
         public Button AudioButton;
         public DisplayOptionsController DisplayPage;
         public Button DisplayButton;
+        public ControlsOptionsController ControlsPage { get; private set; }
+        public Button ControlsButton { get; private set; }
 
         public bool IsOptionsOpen => _showOptions;
         bool _showOptions;
@@ -34,7 +36,7 @@ namespace JoyJoey.Game.UI
         {
             _input = MenuInputCoordinator.Ensure(EventSystemRoot.GetComponent<EventSystem>());
             _input.BackRequested += HandleBack;
-            _input.ApplyRequested += ApplyDisplay;
+            _input.ApplyRequested += ApplyOptions;
             if (ResumeButton) ResumeButton.onClick.AddListener(Resume);
             if (OptionsButton) OptionsButton.onClick.AddListener(ShowOptions);
             if (MainMenuButton) MainMenuButton.onClick.AddListener(ReturnToMenu);
@@ -42,6 +44,8 @@ namespace JoyJoey.Game.UI
             if (BackButton) BackButton.onClick.AddListener(ShowPausePage);
             if (AudioButton) AudioButton.onClick.AddListener(OpenAudio);
             if (DisplayButton) DisplayButton.onClick.AddListener(OpenDisplay);
+            ControlsPage = ControlsOptionsController.AddTo(OptionsPanel, AudioButton, DisplayButton, BackButton, OpenControls, out var controls);
+            ControlsButton = controls;
         }
 
         void OnEnable()
@@ -95,6 +99,7 @@ namespace JoyJoey.Game.UI
             bool visible = _gameplayScene && Session.IsPaused && !Session.IsLoading;
             bool wasVisible = PausePanel && PausePanel.activeSelf || OptionsPanel && OptionsPanel.activeSelf;
             if (!visible) _showOptions = false;
+            if (!visible && ControlsPage) ControlsPage.Close();
             if (!visible && AudioPage && AudioPage.IsOpen) AudioPage.Close();
             if (!visible && DisplayPage && DisplayPage.IsOpen) DisplayPage.Close();
             if (PausePanel) PausePanel.SetActive(visible && !_showOptions);
@@ -119,8 +124,7 @@ namespace JoyJoey.Game.UI
                 if (system && system.currentSelectedGameObject && system.currentSelectedGameObject.transform.IsChildOf(transform))
                     system.SetSelectedGameObject(null);
             }
-            if (_input) _input.SetHints(visible, true, true, visible && DisplayPage && DisplayPage.IsOpen &&
-                !DisplayPage.HasOpenDropdown && !JoyJoey.Game.Display.GameDisplay.Instance.IsPreviewing);
+            if (_input) UpdateHints(visible);
             if (!_feedbackPrepared)
             {
                 UiAudioFeedback.EnsureForCanvas(gameObject);
@@ -143,13 +147,18 @@ namespace JoyJoey.Game.UI
                 back |= pad.buttonEast.wasPressedThisFrame;
             }
             if (escape || toggle || Session.IsPaused && back) UiAudioFeedback.PlayConfirm();
-            if (Session.IsPaused) _input.SetHints(true, true, true, DisplayPage && DisplayPage.IsOpen &&
-                !DisplayPage.HasOpenDropdown && !JoyJoey.Game.Display.GameDisplay.Instance.IsPreviewing);
+            if (Session.IsPaused) UpdateHints(true);
+            if (Session.IsPaused && ControlsPage && ControlsPage.IsOpen)
+            {
+                if (escape || back) ControlsPage.Close();
+                else if (toggle) { ControlsPage.Close(); Session.SetPaused(false); }
+                return;
+            }
             if (Session.IsPaused && DisplayPage && DisplayPage.IsOpen)
             {
                 if (escape || back) DisplayPage.HandleBack();
                 else if (toggle) { DisplayPage.Close(); Session.SetPaused(false); }
-                else if (MenuInputCoordinator.ApplyPressedThisFrame) ApplyDisplay();
+                else if (MenuInputCoordinator.ApplyPressedThisFrame) ApplyOptions();
                 return;
             }
             if (Session.IsPaused && AudioPage && AudioPage.IsOpen)
@@ -190,6 +199,7 @@ namespace JoyJoey.Game.UI
 
         public void ShowPausePage()
         {
+            if (ControlsPage) ControlsPage.Close();
             if (DisplayPage && DisplayPage.IsOpen) DisplayPage.Close();
             if (AudioPage && AudioPage.IsOpen) AudioPage.Close();
             _showOptions = false;
@@ -202,6 +212,7 @@ namespace JoyJoey.Game.UI
         public void OpenAudio()
         {
             if (!AudioPage || !Session || !Session.IsPaused || Session.IsLoading) return;
+            if (ControlsPage) ControlsPage.Close();
             if (DisplayPage && DisplayPage.IsOpen) DisplayPage.Close();
             AudioPage.Open(() => { if (OptionsPanel && OptionsPanel.activeInHierarchy && AudioButton) { _input.SetFocusScope(OptionsPanel.transform, AudioButton); _focusNext = AudioButton.gameObject; } });
         }
@@ -209,8 +220,22 @@ namespace JoyJoey.Game.UI
         public void OpenDisplay()
         {
             if (!DisplayPage || !Session || !Session.IsPaused || Session.IsLoading) return;
+            if (ControlsPage) ControlsPage.Close();
             if (AudioPage && AudioPage.IsOpen) AudioPage.Close();
             DisplayPage.Open(() => { if (OptionsPanel && OptionsPanel.activeInHierarchy && DisplayButton) { _input.SetFocusScope(OptionsPanel.transform, DisplayButton); _focusNext = DisplayButton.gameObject; } });
+        }
+
+        public void OpenControls()
+        {
+            if (!ControlsPage || !OptionsPanel.activeInHierarchy || !Session || !Session.IsPaused || Session.IsLoading) return;
+            if (AudioPage && AudioPage.IsOpen) AudioPage.Close();
+            if (DisplayPage && DisplayPage.IsOpen) DisplayPage.Close();
+            ControlsPage.Open(_input, () =>
+            {
+                if (!OptionsPanel.activeInHierarchy || !ControlsButton) return;
+                _input.SetFocusScope(OptionsPanel.transform, ControlsButton);
+                _focusNext = ControlsButton.gameObject;
+            });
         }
 
         public void Resume()
@@ -222,15 +247,24 @@ namespace JoyJoey.Game.UI
         {
             if (!Session || !Session.IsPaused || !_input.InputReady || Session.IsLoading) return;
             UiAudioFeedback.PlayConfirm();
-            if (DisplayPage && DisplayPage.IsOpen) DisplayPage.HandleBack();
+            if (ControlsPage && ControlsPage.IsOpen) ControlsPage.Close();
+            else if (DisplayPage && DisplayPage.IsOpen) DisplayPage.HandleBack();
             else if (AudioPage && AudioPage.IsOpen) AudioPage.HandleBack();
             else if (_showOptions) ShowPausePage();
             else Resume();
         }
-        void ApplyDisplay()
+        void ApplyOptions()
         {
+            if (ControlsPage && ControlsPage.IsOpen) { ControlsPage.RestoreShownDefaults(); return; }
             if (Session && Session.IsPaused && _input.InputReady && DisplayPage && DisplayPage.IsOpen &&
                 !DisplayPage.HasOpenDropdown && !JoyJoey.Game.Display.GameDisplay.Instance.IsPreviewing) DisplayPage.Apply();
+        }
+
+        void UpdateHints(bool visible)
+        {
+            if (visible && ControlsPage && ControlsPage.IsOpen) { ControlsPage.SetMenuHints(); return; }
+            _input.SetHints(visible, true, true, visible && DisplayPage && DisplayPage.IsOpen &&
+                !DisplayPage.HasOpenDropdown && !JoyJoey.Game.Display.GameDisplay.Instance.IsPreviewing);
         }
 
         void ReturnToMenu()

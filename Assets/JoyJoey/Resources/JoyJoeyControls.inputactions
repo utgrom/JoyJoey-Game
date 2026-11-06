@@ -7,7 +7,7 @@
       "actions": [
         {
           "name": "Move",
-          "type": "Value",
+          "type": "PassThrough",
           "id": "f9f6bc68-d609-5a2f-babf-9ccd77018436",
           "expectedControlType": "Vector2",
           "processors": "",
@@ -236,15 +236,59 @@
           "isPartOfComposite": false
         },
         {
-          "name": "",
+          "name": "Cruceta",
           "id": "2285bd16-c843-5cce-a208-5c8e9da7cf08",
-          "path": "<Gamepad>/dpad",
+          "path": "2DVector",
+          "interactions": "",
+          "processors": "",
+          "groups": "Gamepad",
+          "action": "Move",
+          "isComposite": true,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "up",
+          "id": "9fe6ffb5-d086-4d2b-8aa6-817802b9fcc9",
+          "path": "<Gamepad>/dpad/up",
           "interactions": "",
           "processors": "",
           "groups": "Gamepad",
           "action": "Move",
           "isComposite": false,
-          "isPartOfComposite": false
+          "isPartOfComposite": true
+        },
+        {
+          "name": "down",
+          "id": "c52da11f-1382-490a-8e26-a88b86e67196",
+          "path": "<Gamepad>/dpad/down",
+          "interactions": "",
+          "processors": "",
+          "groups": "Gamepad",
+          "action": "Move",
+          "isComposite": false,
+          "isPartOfComposite": true
+        },
+        {
+          "name": "left",
+          "id": "3018b10e-264e-4fa3-a34a-acbd0cd5e705",
+          "path": "<Gamepad>/dpad/left",
+          "interactions": "",
+          "processors": "",
+          "groups": "Gamepad",
+          "action": "Move",
+          "isComposite": false,
+          "isPartOfComposite": true
+        },
+        {
+          "name": "right",
+          "id": "1256795c-d274-4990-9c14-912d18c5c846",
+          "path": "<Gamepad>/dpad/right",
+          "interactions": "",
+          "processors": "",
+          "groups": "Gamepad",
+          "action": "Move",
+          "isComposite": false,
+          "isPartOfComposite": true
         },
         {
           "name": "",

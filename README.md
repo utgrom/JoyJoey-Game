@@ -22,6 +22,8 @@ Prototipo de juego de acción lateral en **Unity 6000.4.6f1**. El Circo onírico
 | Traje anterior / siguiente | Q / E | L2 / R2 | LT / RT |
 | Pausa | Esc | Start | Menu |
 
+En **Opciones → Controles** podés cambiar las asignaciones de juego de teclado y ratón o de mando. El último dispositivo usado determina qué perfil se muestra. La zona muerta del stick izquierdo se puede ajustar desde ambos perfiles.
+
 ## Build para Windows
 
 En **File → Build Profiles → Windows**, comprobá que **Arranque** sea la primera escena y pulsá **Build**. Elegí una carpeta vacía y conservá juntos todos los archivos que genere Unity. Los binarios de prueba y la documentación interna se guardan fuera del historial de Git.

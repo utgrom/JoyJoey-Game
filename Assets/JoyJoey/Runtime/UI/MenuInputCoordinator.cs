@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JoyJoey.Sandbox;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -36,7 +37,8 @@ namespace JoyJoey.Game.UI
         EventSystem _system;
         InputSystemUIInputModule _module;
         InputActionAsset _sourceActions, _ownedActions;
-        bool _gate, _hintsWired, _preparingActions, _smokeDiagnostics;
+        bool _gate, _hintsWired, _preparingActions, _smokeDiagnostics, _controlsDefaults;
+        float _configuredDeadzone;
         Vector2 _mousePosition;
         readonly Dictionary<int, Vector4> _padSticks = new Dictionary<int, Vector4>();
         GameObject _lastContentSelection;
@@ -63,6 +65,8 @@ namespace JoyJoey.Game.UI
             Cache();
             if (!Application.isPlaying) return;
             Active = this;
+            GameplayControls.Changed += RefreshLeftStickConfiguration;
+            RefreshLeftStickConfiguration();
             if (_ownedActions) _ownedActions.Enable();
             _mousePosition = Mouse.current != null ? Mouse.current.position.ReadValue() : Vector2.zero;
             RememberSticks();
@@ -86,6 +90,7 @@ namespace JoyJoey.Game.UI
             _ownedActions = Instantiate(_sourceActions);
             _ownedActions.name = _sourceActions.name + " · menu runtime";
             _ownedActions.hideFlags = HideFlags.DontSave;
+            _configuredDeadzone = StickMenuInput.DeadzonePercent;
             StickMenuInput.Configure(_ownedActions);
             _module.actionsAsset = _ownedActions;
             // Each menu owns its own input state. Hiding a menu can cancel it without
@@ -93,6 +98,30 @@ namespace JoyJoey.Game.UI
             _ownedActions.Enable();
             if (resume) _module.enabled = true;
             _preparingActions = false;
+        }
+
+        void RefreshLeftStickConfiguration()
+        {
+            if (!_ownedActions) return;
+            float percent = StickMenuInput.DeadzonePercent;
+            if (Mathf.Approximately(percent, _configuredDeadzone)) return;
+            bool toggleBinding = (percent >= 100) != (_configuredDeadzone >= 100);
+            _configuredDeadzone = percent;
+            RememberSticks();
+            // Intermediate values are read live by the processor. At 100% the physical
+            // control leaves navigation arbitration altogether, so a drifting pad cannot win.
+            if (!toggleBinding)
+            {
+                var navigate = _ownedActions.FindAction("UI/Navigate");
+                var control = navigate?.activeControl;
+                if (control?.device is Gamepad pad && StickMenuInput.IsLeftStickControl(control, pad) &&
+                    StickMenuInput.ReadLeftMenuVector(pad, percent) == Vector2.zero) navigate.Reset();
+                return;
+            }
+            bool resume = _ownedActions.enabled;
+            if (resume) _ownedActions.Disable();
+            StickMenuInput.Configure(_ownedActions);
+            if (resume) _ownedActions.Enable();
         }
 
         /// <summary>The opening press and every already-held direction must be released before menu actions arm.</summary>
@@ -198,7 +227,8 @@ namespace JoyJoey.Game.UI
             {
                 var position = mouse.position.ReadValue();
                 mouseUsed = (position - _mousePosition).sqrMagnitude > 4 || mouse.leftButton.wasPressedThisFrame ||
-                    mouse.rightButton.wasPressedThisFrame || mouse.middleButton.wasPressedThisFrame || mouse.scroll.ReadValue().sqrMagnitude > 0;
+                    mouse.rightButton.wasPressedThisFrame || mouse.middleButton.wasPressedThisFrame ||
+                    mouse.forwardButton.wasPressedThisFrame || mouse.backButton.wasPressedThisFrame || mouse.scroll.ReadValue().sqrMagnitude > 0;
                 _mousePosition = position;
             }
             Gamepad usedPad = null;
@@ -309,11 +339,12 @@ namespace JoyJoey.Game.UI
         }
 
         public void SetHints(bool visible, bool back, bool confirm, bool apply,
-            string backLabel = "Volver", string confirmLabel = "Confirmar", string applyLabel = "Aplicar cambios")
+            string backLabel = "Volver", string confirmLabel = "Confirmar", string applyLabel = "Aplicar cambios", bool controlsDefaults = false)
         {
             EnsurePointerShield();
             EnsureHints();
             _backLabel = backLabel; _confirmLabel = confirmLabel; _applyLabel = applyLabel;
+            _controlsDefaults = controlsDefaults;
             if (HintRoot) HintRoot.SetActive(visible);
             if (FooterBackButton) FooterBackButton.gameObject.SetActive(back);
             if (FooterConfirmButton) FooterConfirmButton.gameObject.SetActive(confirm);
@@ -372,13 +403,15 @@ namespace JoyJoey.Game.UI
         void RefreshHints()
         {
             string back, confirm, apply;
-            if (!GamepadMode) { back = "ESC"; confirm = "J"; apply = "K"; }
+            if (!GamepadMode) { back = "ESC"; confirm = "J"; apply = _controlsDefaults ? "H" : "K"; }
             else if (Family == MenuInputFamily.PlayStation)
             {
                 bool glyphs = HintRight && HintRight.font && HintRight.font.HasCharacter('○') && HintRight.font.HasCharacter('×') && HintRight.font.HasCharacter('□');
-                back = glyphs ? "○" : "Círculo"; confirm = glyphs ? "×" : "Cruz"; apply = glyphs ? "□" : "Cuadrado";
+                back = glyphs ? "○" : "Círculo"; confirm = glyphs ? "×" : "Cruz";
+                apply = _controlsDefaults ? (ApplyHint && ApplyHint.font && ApplyHint.font.HasCharacter('△') ? "△" : "Triángulo") :
+                    (glyphs ? "□" : "Cuadrado");
             }
-            else { back = "B"; confirm = "A"; apply = "X"; }
+            else { back = "B"; confirm = "A"; apply = _controlsDefaults ? "Y" : "X"; }
             if (HintLeft) HintLeft.text = back + "  " + _backLabel;
             if (HintRight) HintRight.text = confirm + "  " + _confirmLabel;
             if (ApplyHint) ApplyHint.text = apply + "  " + _applyLabel;
@@ -386,6 +419,7 @@ namespace JoyJoey.Game.UI
         void OnDisable()
         {
             if (!Application.isPlaying) return;
+            GameplayControls.Changed -= RefreshLeftStickConfiguration;
             if (_ownedActions) _ownedActions.Disable();
             if (PointerShield) PointerShield.SetActive(false);
             if (Active == this) { Active = null; Cursor.visible = true; }

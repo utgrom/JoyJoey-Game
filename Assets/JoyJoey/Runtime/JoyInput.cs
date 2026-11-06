@@ -39,11 +39,12 @@ namespace JoyJoey.Sandbox
 
         public JoyInput(StickInputSettings settings = null)
         {
-            stickSettings = settings ? settings : Resources.Load<StickInputSettings>(StickInputSettings.ResourceName);
+            stickSettings = settings;
             var template = Resources.Load<InputActionAsset>("JoyJoeyControls");
             Asset = template != null ? UnityEngine.Object.Instantiate(template) : CreateDefaultAsset();
             Asset.name = "JoyJoeyControls (runtime)";
             Asset.hideFlags = HideFlags.DontSave;
+            GameplayControls.ApplyBindings(Asset);
             var map = Asset.FindActionMap("Gameplay", true);
             move = map.FindAction("Move", true);
             move.performed += OnMove;
@@ -59,6 +60,7 @@ namespace JoyJoey.Sandbox
             }
             Application.focusChanged += OnFocusChanged;
             InputSystem.onDeviceChange += OnDeviceChange;
+            GameplayControls.BindingsChanged += OnBindingsChanged;
             Asset.Enable();
         }
 
@@ -67,7 +69,7 @@ namespace JoyJoey.Sandbox
             if (disposed) throw new ObjectDisposedException(nameof(JoyInput));
             var frame = new InputFrame
             {
-                Move = focused ? ReadDirection() : Vector2.zero,
+                Move = focused ? ReadDirection(eightWay: true) : Vector2.zero,
                 JumpHeld = Held(ActionId.Jump),
                 BasicHeld = Held(ActionId.Basic),
                 RagHeld = Held(ActionId.Rag),
@@ -118,10 +120,9 @@ namespace JoyJoey.Sandbox
         private float HeldSeconds(ActionId id) => focused && !gameplayPaused && buttons.TryGetValue(id, out var state) && state.Held
             ? Mathf.Max(0, (float)(InputState.currentTime - state.PressedAt)) : 0;
 
-        private float LeftStickDeadzonePercent => stickSettings ? stickSettings.LeftStickDeadzonePercent : StickInputSettings.DefaultDeadzonePercent;
-        private Vector2 ReadDirection() => ReadDirectionAtEvent(ActionId.Basic);
+        private float LeftStickDeadzonePercent => stickSettings ? stickSettings.LeftStickDeadzonePercent : GameplayControls.LeftStickDeadzonePercent;
 
-        private Vector2 ReadDirectionAtEvent(ActionId action)
+        private Vector2 ReadDirection(bool eightWay)
         {
             // Multiple controls may change in one hardware event. Read their current
             // state directly: its Move callback can run after Attack, including
@@ -131,7 +132,6 @@ namespace JoyJoey.Sandbox
             float bestStrength = 0;
             int bestPriority = -1;
             bool hasUnsupportedComposite = false;
-            bool dash = action == ActionId.Dash;
             var bindings = move.bindings;
             for (int index = 0; index < bindings.Count; index++)
             {
@@ -144,7 +144,10 @@ namespace JoyJoey.Sandbox
                         float amount = 0;
                         foreach (var control in move.controls)
                             if (control is AxisControl axis && InputControlPath.Matches(bindings[part].effectivePath, control))
-                                amount = Mathf.Max(amount, axis.ReadValue());
+                            {
+                                float value = control is ButtonControl button ? (button.isPressed ? 1 : 0) : axis.ReadValue();
+                                amount = Mathf.Max(amount, value);
+                            }
                         switch (bindings[part].name.ToLowerInvariant())
                         {
                             case "up": candidate.y += amount; break;
@@ -167,7 +170,7 @@ namespace JoyJoey.Sandbox
                             // unprocessed state avoids stacking the control and binding processors.
                             Vector2 raw = vector.ReadUnprocessedValue();
                             float strength = StickDirections.Strength(raw, LeftStickDeadzonePercent);
-                            Vector2 direction = dash ? StickDirections.ForDash(raw, LeftStickDeadzonePercent) :
+                            Vector2 direction = eightWay ? StickDirections.ForDash(raw, LeftStickDeadzonePercent) :
                                 StickDirections.ForMovement(raw, LeftStickDeadzonePercent);
                             Consider(direction, strength, 1, ref best, ref bestStrength, ref bestPriority);
                             continue;
@@ -198,7 +201,7 @@ namespace JoyJoey.Sandbox
                 {
                     Vector2 raw = pad.leftStick.ReadUnprocessedValue();
                     float strength = StickDirections.Strength(raw, LeftStickDeadzonePercent);
-                    fallback = dash ? StickDirections.ForDash(raw, LeftStickDeadzonePercent) :
+                    fallback = eightWay ? StickDirections.ForDash(raw, LeftStickDeadzonePercent) :
                         StickDirections.ForMovement(raw, LeftStickDeadzonePercent);
                     Consider(fallback, strength, 1, ref best, ref bestStrength, ref bestPriority);
                 }
@@ -243,6 +246,11 @@ namespace JoyJoey.Sandbox
                     TrackDevice(pad);
                 return;
             }
+            if (control is ButtonControl button)
+            {
+                if (button.isPressed) TrackDevice(control.device);
+                return;
+            }
             if (control is Vector2Control vector && vector.ReadValue().sqrMagnitude > .01f ||
                 control is AxisControl axis && Mathf.Abs(axis.ReadValue()) > .01f)
                 TrackDevice(control.device);
@@ -276,7 +284,7 @@ namespace JoyJoey.Sandbox
                 TrackDevice(context.control.device);
             }
             if (pending.Count == 128) pending.RemoveAt(0);
-            pending.Add(new InputCommand(id, edge, ReadDirectionAtEvent(id), context.time, state.Taps));
+            pending.Add(new InputCommand(id, edge, ReadDirection(eightWay: id == ActionId.Dash), context.time, state.Taps));
         }
 
         private void TrackDevice(InputDevice device)
@@ -288,7 +296,16 @@ namespace JoyJoey.Sandbox
                     || layout.IndexOf("PlayStation", StringComparison.OrdinalIgnoreCase) >= 0
                     ? "MANDO PS" : "MANDO";
             }
-            else if (device is Keyboard) Device = "TECLADO";
+            else if (device is Keyboard || device is Mouse) Device = "TECLADO";
+        }
+
+        private void OnBindingsChanged()
+        {
+            bool enabled = Asset.enabled;
+            if (enabled) Asset.Disable();
+            GameplayControls.ApplyBindings(Asset);
+            if (enabled) Asset.Enable();
+            ResetActionStates(blockHeldControls: focused && !gameplayPaused);
         }
 
         private void OnFocusChanged(bool focused)
@@ -318,16 +335,10 @@ namespace JoyJoey.Sandbox
         {
             bool pad = Device != "TECLADO";
             bool ps = Device == "MANDO PS";
+            string binding = GameplayControls.ActionLabel(action.ToString(), pad, ps);
+            if (binding != null) return binding;
             switch (action)
             {
-                case ActionId.Jump: return pad ? (ps ? "Cruz" : "A") : "Space";
-                case ActionId.Basic: return pad ? (ps ? "Cuadrado" : "X") : "J";
-                case ActionId.Rag: return pad ? (ps ? "Triangulo" : "Y") : "K";
-                case ActionId.Trick: return pad ? (ps ? "Circulo" : "B") : "L";
-                case ActionId.Dash: return pad ? (ps ? "R1" : "RB") : "Shift";
-                case ActionId.Transform: return pad ? (ps ? "L1" : "LB") : "H";
-                case ActionId.PreviousSuit: return pad ? (ps ? "L2" : "LT") : "Q";
-                case ActionId.NextSuit: return pad ? (ps ? "R2" : "RT") : "E";
                 case ActionId.Reset: return pad ? "Select" : "R";
                 case ActionId.TogglePause: return pad ? "Start" : "Esc";
                 case ActionId.ToggleHelp: return "F1";
@@ -347,6 +358,7 @@ namespace JoyJoey.Sandbox
             disposed = true;
             Application.focusChanged -= OnFocusChanged;
             InputSystem.onDeviceChange -= OnDeviceChange;
+            GameplayControls.BindingsChanged -= OnBindingsChanged;
             move.performed -= OnMove;
             foreach (var pair in callbacks) pair.Key.performed -= pair.Value;
             Asset.Disable();
@@ -363,12 +375,17 @@ namespace JoyJoey.Sandbox
             asset.name = "JoyJoeyControls";
             var map = new InputActionMap("Gameplay");
             asset.AddActionMap(map);
-            var movement = map.AddAction("Move", InputActionType.Value, expectedControlLayout: "Vector2");
+            // Direction arbitration is performed from physical state in ReadDirection. Keep
+            // source callbacks independent so a drifting disabled stick cannot hide D-pad use.
+            var movement = map.AddAction("Move", InputActionType.PassThrough, expectedControlLayout: "Vector2");
+            movement.wantsInitialStateCheck = true;
             movement.AddCompositeBinding("2DVector")
                 .With("Up", "<Keyboard>/w").With("Down", "<Keyboard>/s")
                 .With("Left", "<Keyboard>/a").With("Right", "<Keyboard>/d");
             movement.AddBinding("<Gamepad>/leftStick", processors: "stickDeadzone(min=0.22,max=0.95)");
-            movement.AddBinding("<Gamepad>/dpad");
+            movement.AddCompositeBinding("2DVector")
+                .With("Up", "<Gamepad>/dpad/up").With("Down", "<Gamepad>/dpad/down")
+                .With("Left", "<Gamepad>/dpad/left").With("Right", "<Gamepad>/dpad/right");
             AddButton(map, ActionId.Jump, "space", "buttonSouth");
             AddButton(map, ActionId.Basic, "j", "buttonWest");
             AddButton(map, ActionId.Rag, "k", "buttonNorth");
