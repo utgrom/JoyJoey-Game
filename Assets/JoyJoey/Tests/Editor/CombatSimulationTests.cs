@@ -41,6 +41,27 @@ namespace JoyJoey.Sandbox.Tests
             for(int i=0;i<60;i++){ sim.Step(Input()); low=Mathf.Max(low,sim.Player.Position.y); }
             Assert.That(high, Is.GreaterThan(low + 1));
         }
+        [TestCase(-1, -1)]
+        [TestCase(-1, 1)]
+        [TestCase(1, -1)]
+        [TestCase(1, 1)]
+        public void RunningDiagonallyReachesFullHorizontalSpeed(int horizontal, int vertical)
+        {
+            Vector2 direction = new Vector2(horizontal, vertical).normalized;
+            for (int i = 0; i < 12; i++) sim.Step(Input(direction: direction));
+            Assert.That(sim.Player.Velocity.x, Is.EqualTo(horizontal * sim.Tuning.RunSpeed).Within(.001f));
+        }
+        [TestCase(-1)]
+        [TestCase(1)]
+        public void VerticalDirectionAloneDoesNotMoveJoeyOrChangeGravity(int vertical)
+        {
+            sim.Player.Position = new Vector2(-3, 6);
+            sim.Player.Grounded = false;
+            sim.Player.Velocity = Vector2.down * 2;
+            sim.Step(Input(direction: new Vector2(0, vertical)));
+            Assert.That(sim.Player.Velocity.x, Is.Zero);
+            Assert.That(sim.Player.Velocity.y, Is.EqualTo(-2 - sim.Tuning.Gravity * CombatSimulation.Delta).Within(.001f));
+        }
         [Test] public void AirDashIsLimitedAndRestoredOnLanding()
         {
             sim.Step(Input(ActionId.Jump,jump:true)); sim.Player.Position = new Vector2(-11, 7);

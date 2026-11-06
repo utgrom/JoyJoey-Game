@@ -444,10 +444,13 @@ namespace JoyJoey.Sandbox
             if (Mathf.Abs(inputX) > .12f)
             {
                 // Accelerate toward run speed without deleting excess same-direction momentum.
+                // Input diagonals are unit vectors, but Joey drives only the horizontal axis.
                 float acceleration = Player.Grounded ? Tuning.GroundAcceleration : Tuning.AirAcceleration;
-                bool overSpeed = Mathf.Sign(Player.Velocity.x) == Mathf.Sign(inputX) && Mathf.Abs(Player.Velocity.x) > Tuning.RunSpeed;
-                if (!overSpeed) Player.Velocity.x = Mathf.MoveTowards(Player.Velocity.x, inputX * Tuning.RunSpeed, acceleration * control * Delta);
-                else Player.Velocity.x = Mathf.MoveTowards(Player.Velocity.x, inputX * Tuning.RunSpeed, Tuning.AirFriction * Delta);
+                float runDirection = Mathf.Sign(inputX);
+                float targetSpeed = runDirection * Tuning.RunSpeed;
+                bool overSpeed = Mathf.Sign(Player.Velocity.x) == runDirection && Mathf.Abs(Player.Velocity.x) > Tuning.RunSpeed;
+                if (!overSpeed) Player.Velocity.x = Mathf.MoveTowards(Player.Velocity.x, targetSpeed, acceleration * control * Delta);
+                else Player.Velocity.x = Mathf.MoveTowards(Player.Velocity.x, targetSpeed, Tuning.AirFriction * Delta);
             }
             // Attacks retain existing momentum, while the floor still brakes normally.
             // Reducing friction with attack steering made close ground combos slide through the target.
@@ -455,7 +458,6 @@ namespace JoyJoey.Sandbox
             float gravity = Tuning.Gravity * (Player.Move!=null?Mathf.Max(.05f,Player.Move.GravityScale):1);
             if (_variableJump && Player.Velocity.y > 0 && !_input.JumpHeld) gravity *= 2.1f;
             if(Player.Velocity.y<=0)_variableJump=false;
-            if (_input.Move.y < -.5f && Player.Velocity.y < 0) gravity *= 1.7f;
             Player.Velocity.y = Mathf.Max(-Tuning.FallSpeed, Player.Velocity.y - gravity * Delta);
             if (Player.WallSide != 0 && inputX * Player.WallSide > .1f && Player.Velocity.y < -3.5f) Player.Velocity.y = -3.5f;
             Motor(Player);
