@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5527008824681008681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3780753607004723669}
+  - component: {fileID: 261957422829113464}
+  m_Layer: 0
+  m_Name: AudioRig
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3780753607004723669
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5527008824681008681}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &261957422829113464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5527008824681008681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b1cb82a342b0e41b3153b4c91679a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: JoyJoey.Runtime::JoyJoey.Game.Audio.GameAudio
+  Mixer: {fileID: 24100000, guid: e7cc3f42e89267f41bcfc2681de9f728, type: 2}
+  MasterGroup: {fileID: 24300002, guid: e7cc3f42e89267f41bcfc2681de9f728, type: 2}
+  MusicGroup: {fileID: -6214091139336779636, guid: e7cc3f42e89267f41bcfc2681de9f728, type: 2}
+  SfxGroup: {fileID: 236555758961193256, guid: e7cc3f42e89267f41bcfc2681de9f728, type: 2}
+  UiGroup: {fileID: 4082939069822409848, guid: e7cc3f42e89267f41bcfc2681de9f728, type: 2}
+  NormalSnapshot: {fileID: 24500006, guid: e7cc3f42e89267f41bcfc2681de9f728, type: 2}
+  PauseSnapshot: {fileID: 1604005346986723896, guid: e7cc3f42e89267f41bcfc2681de9f728, type: 2}
+  CutsceneSnapshot: {fileID: 3626477332728333703, guid: e7cc3f42e89267f41bcfc2681de9f728, type: 2}
+  TestMusicClip: {fileID: 8300000, guid: 4dcb76f3f2cbf4a4fa501028945532e7, type: 3}
+  TestSfxClip: {fileID: 8300000, guid: e98e3c7f9541d1148a857572c1f16483, type: 3}
+  TestUiClip: {fileID: 8300000, guid: ba5869497e74a9a4f9db081324419f0c, type: 3}
+  UiMoveClip: {fileID: 8300000, guid: a24b27daccb4f1548a15850402c2e690, type: 3}
+  UiConfirmClip: {fileID: 8300000, guid: 43ae60e07445ee542a21032074dc6e7a, type: 3}

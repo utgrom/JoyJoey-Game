@@ -1,0 +1,27 @@
+# Unity generates these locally.
+/Library/
+/Temp/
+/Obj/
+/Logs/
+/UserSettings/
+/MemoryCaptures/
+/Recordings/
+/Builds/
+/Assets/_Recovery/
+/Assets/_Recovery.meta
+
+# IDE configuration and generated project files.
+/.idea/
+/.vs/
+/.vscode/
+*.csproj
+*.sln
+*.slnx
+*.user
+
+# Internal design documents, backups and validation output.
+/Docs/
+/Validation/
+/.pitch-*/
+.DS_Store
+Thumbs.db

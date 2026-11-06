@@ -1,0 +1,14 @@
+{
+  "name": "JoyJoey.Editor",
+  "rootNamespace": "JoyJoey.Sandbox.Editor",
+  "references": [
+    "JoyJoey.Runtime",
+    "Unity.InputSystem",
+    "UnityEngine.UI",
+    "Unity.RenderPipelines.Core.Runtime",
+    "Unity.RenderPipelines.Universal.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

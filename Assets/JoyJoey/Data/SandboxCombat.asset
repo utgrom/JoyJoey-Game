@@ -1,0 +1,2269 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4551dcadce32dd04b83ad1823d2fea90, type: 3}
+  m_Name: SandboxCombat
+  m_EditorClassIdentifier: JoyJoey.Runtime::JoyJoey.Sandbox.CombatCatalog
+  Moves:
+  - Id: jab1
+    Title: Balloon Cuts I
+    Action: 1
+    Startup: 5
+    Active: 3
+    Recovery: 0
+    HitboxOffset: {x: 1, y: 1}
+    HitboxSize: {x: 2, y: 1.6}
+    Damage: 5
+    Launch: {x: 1.2, y: 0.9}
+    Hitstun: 12
+    Hitstop: 2
+    Rehit: 0
+    CancelOpen: 5
+    CancelClose: 7
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 5
+      EndFrame: 8
+      HitGroup: 0
+      Hit:
+        Damage: 5
+        EnemyImpulse: {x: 1.2, y: 0.9}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 12
+        Hitstop: 2
+        Rehit: 0
+        JugglePower: 8
+        ArmorDamage: 7
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 5
+        Offset: {x: 0.9, y: 0.9}
+        Size: {x: 2, y: 1.8}
+      - Frame: 7
+        Offset: {x: 1.1, y: 0.95}
+        Size: {x: 2, y: 1.8}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 5
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 7
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: jab2
+    Title: Balloon Cuts II
+    Action: 1
+    Startup: 5
+    Active: 3
+    Recovery: 0
+    HitboxOffset: {x: 1, y: 1}
+    HitboxSize: {x: 2, y: 1.6}
+    Damage: 5
+    Launch: {x: 1.5, y: 1.5}
+    Hitstun: 13
+    Hitstop: 2
+    Rehit: 0
+    CancelOpen: 5
+    CancelClose: 7
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 5
+      EndFrame: 8
+      HitGroup: 0
+      Hit:
+        Damage: 5
+        EnemyImpulse: {x: 1.5, y: 1.5}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 13
+        Hitstop: 2
+        Rehit: 0
+        JugglePower: 8
+        ArmorDamage: 7
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 5
+        Offset: {x: 0.9, y: 0.9}
+        Size: {x: 2, y: 1.8}
+      - Frame: 7
+        Offset: {x: 1.1, y: 0.95}
+        Size: {x: 2, y: 1.8}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 5
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 7
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: jab3
+    Title: "Balloon Cuts \xB7 Cierre"
+    Action: 1
+    Startup: 7
+    Active: 4
+    Recovery: 3
+    HitboxOffset: {x: 1, y: 1}
+    HitboxSize: {x: 2, y: 1.6}
+    Damage: 10
+    Launch: {x: 8, y: -5}
+    Hitstun: 18
+    Hitstop: 4
+    Rehit: 0
+    CancelOpen: 7
+    CancelClose: 13
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 1
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 7
+      EndFrame: 11
+      HitGroup: 0
+      Hit:
+        Damage: 10
+        EnemyImpulse: {x: 8, y: -5}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 18
+        Hitstop: 4
+        Rehit: 0
+        JugglePower: 15
+        ArmorDamage: 14
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 7
+        Offset: {x: 0.9, y: 0.9}
+        Size: {x: 2, y: 1.8}
+      - Frame: 10
+        Offset: {x: 1.1, y: 0.95}
+        Size: {x: 2, y: 1.8}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 7
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 13
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: slash
+    Title: Balloon Slash
+    Action: 1
+    Startup: 6
+    Active: 4
+    Recovery: 0
+    HitboxOffset: {x: 1, y: 0.95}
+    HitboxSize: {x: 2.5, y: 1.9}
+    Damage: 8
+    Launch: {x: 3.4, y: 3}
+    Hitstun: 14
+    Hitstop: 3
+    Rehit: 0
+    CancelOpen: 6
+    CancelClose: 9
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 5, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 6
+      EndFrame: 10
+      HitGroup: 0
+      Hit:
+        Damage: 8
+        EnemyImpulse: {x: 3.4, y: 3}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 14
+        Hitstop: 3
+        Rehit: 0
+        JugglePower: 12
+        ArmorDamage: 11.2
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 6
+        Offset: {x: 0.9, y: 0.95}
+        Size: {x: 2.5, y: 1.9}
+      - Frame: 9
+        Offset: {x: 1.1, y: 0.95}
+        Size: {x: 2.5, y: 1.9}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 6
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 9
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: launcher
+    Title: Pop Launch
+    Action: 1
+    Startup: 6
+    Active: 4
+    Recovery: 0
+    HitboxOffset: {x: 0.9, y: 1.15}
+    HitboxSize: {x: 2.3, y: 2.6}
+    Damage: 7
+    Launch: {x: 1.2, y: 11}
+    Hitstun: 26
+    Hitstop: 3
+    Rehit: 0
+    CancelOpen: 6
+    CancelClose: 9
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0.3, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 1
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 6
+      EndFrame: 10
+      HitGroup: 0
+      Hit:
+        Damage: 7
+        EnemyImpulse: {x: 1.2, y: 11}
+        EnemyVelocityMode: 1
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 26
+        Hitstop: 3
+        Rehit: 0
+        JugglePower: 18
+        ArmorDamage: 18
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 6
+        Offset: {x: 0.79999995, y: 1.15}
+        Size: {x: 2.3, y: 2.6}
+      - Frame: 9
+        Offset: {x: 1, y: 1.15}
+        Size: {x: 2.3, y: 2.6}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 6
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 13
+      FrontArmAngle: 145
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 9
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: air1
+    Title: Balloon Air-Raid I
+    Action: 1
+    Startup: 4
+    Active: 3
+    Recovery: 0
+    HitboxOffset: {x: 1, y: 1}
+    HitboxSize: {x: 2, y: 1.6}
+    Damage: 4
+    Launch: {x: 1.1, y: 5.6}
+    Hitstun: 15
+    Hitstop: 2
+    Rehit: 0
+    CancelOpen: 4
+    CancelClose: 6
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 4
+      EndFrame: 7
+      HitGroup: 0
+      Hit:
+        Damage: 4
+        EnemyImpulse: {x: 1.1, y: 5.6}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 15
+        Hitstop: 2
+        Rehit: 0
+        JugglePower: 8
+        ArmorDamage: 6
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 4
+        Offset: {x: 0.9, y: 0.9}
+        Size: {x: 2, y: 1.8}
+      - Frame: 6
+        Offset: {x: 1.1, y: 0.95}
+        Size: {x: 2, y: 1.8}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 4
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 6
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: air2
+    Title: Balloon Air-Raid II
+    Action: 1
+    Startup: 5
+    Active: 3
+    Recovery: 0
+    HitboxOffset: {x: 1, y: 1}
+    HitboxSize: {x: 2, y: 1.6}
+    Damage: 5
+    Launch: {x: 1.6, y: 6}
+    Hitstun: 16
+    Hitstop: 2
+    Rehit: 0
+    CancelOpen: 5
+    CancelClose: 7
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 5
+      EndFrame: 8
+      HitGroup: 0
+      Hit:
+        Damage: 5
+        EnemyImpulse: {x: 1.6, y: 6}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 16
+        Hitstop: 2
+        Rehit: 0
+        JugglePower: 8
+        ArmorDamage: 7
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 5
+        Offset: {x: 0.9, y: 0.9}
+        Size: {x: 2, y: 1.8}
+      - Frame: 7
+        Offset: {x: 1.1, y: 0.95}
+        Size: {x: 2, y: 1.8}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 5
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 7
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: air3
+    Title: "Balloon Air-Raid \xB7 Cierre"
+    Action: 1
+    Startup: 7
+    Active: 4
+    Recovery: 2
+    HitboxOffset: {x: 1, y: 1}
+    HitboxSize: {x: 2, y: 1.6}
+    Damage: 9
+    Launch: {x: 9, y: -8}
+    Hitstun: 18
+    Hitstop: 4
+    Rehit: 0
+    CancelOpen: 7
+    CancelClose: 12
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 1
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 7
+      EndFrame: 11
+      HitGroup: 0
+      Hit:
+        Damage: 9
+        EnemyImpulse: {x: 9, y: -8}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 18
+        Hitstop: 4
+        Rehit: 0
+        JugglePower: 13.5
+        ArmorDamage: 12.599999
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 7
+        Offset: {x: 0.9, y: 0.9}
+        Size: {x: 2, y: 1.8}
+      - Frame: 10
+        Offset: {x: 1.1, y: 0.95}
+        Size: {x: 2, y: 1.8}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 7
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 12
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: dive
+    Title: Pop Drop
+    Action: 1
+    Startup: 5
+    Active: 10
+    Recovery: 0
+    HitboxOffset: {x: 0.4, y: 0.2}
+    HitboxSize: {x: 1.8, y: 1.8}
+    Damage: 9
+    Launch: {x: 2, y: 12}
+    Hitstun: 22
+    Hitstop: 4
+    Rehit: 0
+    CancelOpen: 5
+    CancelClose: 14
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: -15}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.1
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 5
+      EndFrame: 15
+      HitGroup: 0
+      Hit:
+        Damage: 9
+        EnemyImpulse: {x: 2, y: 12}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 1, y: 10}
+        AttackerVelocityMode: 0
+        Hitstun: 22
+        Hitstop: 4
+        Rehit: 0
+        JugglePower: 13.5
+        ArmorDamage: 12.599999
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 5
+        Offset: {x: 0.3, y: 0.2}
+        Size: {x: 1.8, y: 1.8}
+      - Frame: 14
+        Offset: {x: 0.5, y: 0.2}
+        Size: {x: 1.8, y: 1.8}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 5
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 14
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: ragStrong
+    Title: Titanenklatsch
+    Action: 2
+    Startup: 11
+    Active: 4
+    Recovery: 0
+    HitboxOffset: {x: 1.2, y: 1}
+    HitboxSize: {x: 2.8, y: 2}
+    Damage: 14
+    Launch: {x: 4.5, y: 7}
+    Hitstun: 20
+    Hitstop: 4
+    Rehit: 0
+    CancelOpen: 11
+    CancelClose: 14
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 2, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 11
+      EndFrame: 15
+      HitGroup: 0
+      Hit:
+        Damage: 14
+        EnemyImpulse: {x: 4.5, y: 7}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 20
+        Hitstop: 4
+        Rehit: 0
+        JugglePower: 25
+        ArmorDamage: 25
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 11
+        Offset: {x: 1.1, y: 1}
+        Size: {x: 2.8, y: 2}
+      - Frame: 14
+        Offset: {x: 1.3000001, y: 1}
+        Size: {x: 2.8, y: 2}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 11
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 14
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: ragStrongCharged
+    Title: Titanenklatsch cargado
+    Action: 2
+    Startup: 19
+    Active: 5
+    Recovery: 3
+    HitboxOffset: {x: 1.25, y: 1.2}
+    HitboxSize: {x: 3.1, y: 2.6}
+    Damage: 24
+    Launch: {x: 7, y: 13}
+    Hitstun: 28
+    Hitstop: 6
+    Rehit: 0
+    CancelOpen: 19
+    CancelClose: 26
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 2.5, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 19
+      EndFrame: 24
+      HitGroup: 0
+      Hit:
+        Damage: 24
+        EnemyImpulse: {x: 7, y: 13}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 28
+        Hitstop: 6
+        Rehit: 0
+        JugglePower: 40
+        ArmorDamage: 40
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 19
+        Offset: {x: 1.15, y: 1.2}
+        Size: {x: 3.1, y: 2.6}
+      - Frame: 23
+        Offset: {x: 1.35, y: 1.2}
+        Size: {x: 3.1, y: 2.6}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 19
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 26
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: ragJester
+    Title: Jester Rattle I
+    Action: 2
+    Startup: 5
+    Active: 6
+    Recovery: 0
+    HitboxOffset: {x: 1, y: 1}
+    HitboxSize: {x: 2, y: 1.6}
+    Damage: 2.5
+    Launch: {x: 0.7, y: 4.5}
+    Hitstun: 13
+    Hitstop: 1
+    Rehit: 4
+    CancelOpen: 5
+    CancelClose: 10
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 5
+      EndFrame: 11
+      HitGroup: 0
+      Hit:
+        Damage: 2.5
+        EnemyImpulse: {x: 0.7, y: 4.5}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 13
+        Hitstop: 1
+        Rehit: 4
+        JugglePower: 6
+        ArmorDamage: 4
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 5
+        Offset: {x: 0.9, y: 0.9}
+        Size: {x: 2, y: 1.8}
+      - Frame: 10
+        Offset: {x: 1.1, y: 0.95}
+        Size: {x: 2, y: 1.8}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 5
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 10
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: ragJesterCharged
+    Title: "Jester Encore \xB7 Cierre"
+    Action: 2
+    Startup: 9
+    Active: 18
+    Recovery: 0
+    HitboxOffset: {x: 1, y: 1}
+    HitboxSize: {x: 2, y: 1.6}
+    Damage: 2.5
+    Launch: {x: 0.8, y: 4}
+    Hitstun: 14
+    Hitstop: 1
+    Rehit: 0
+    CancelOpen: 9
+    CancelClose: 26
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 1
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 9
+      EndFrame: 21
+      HitGroup: 0
+      Hit:
+        Damage: 2.5
+        EnemyImpulse: {x: 0.8, y: 4}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 14
+        Hitstop: 1
+        Rehit: 5
+        JugglePower: 6
+        ArmorDamage: 5
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 9
+        Offset: {x: 0.9, y: 0.9}
+        Size: {x: 2, y: 1.8}
+      - Frame: 26
+        Offset: {x: 1.1, y: 0.95}
+        Size: {x: 2, y: 1.8}
+    - Name: Remate
+      StartFrame: 23
+      EndFrame: 27
+      HitGroup: 1
+      Hit:
+        Damage: 8
+        EnemyImpulse: {x: 9, y: -8}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 18
+        Hitstop: 4
+        Rehit: 0
+        JugglePower: 15
+        ArmorDamage: 13
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 23
+        Offset: {x: 1.1, y: 1}
+        Size: {x: 2.4, y: 2}
+      - Frame: 26
+        Offset: {x: 1.35, y: 0.6}
+        Size: {x: 2.3, y: 2}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 9
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 26
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: ragIllusion
+    Title: Curtain Call
+    Action: 2
+    Startup: 7
+    Active: 3
+    Recovery: 0
+    HitboxOffset: {x: 1, y: 1.05}
+    HitboxSize: {x: 2.4, y: 2.1}
+    Damage: 7
+    Launch: {x: 1.8, y: 7}
+    Hitstun: 18
+    Hitstop: 3
+    Rehit: 0
+    CancelOpen: 7
+    CancelClose: 9
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 2, y: 1}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 1
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 7
+      EndFrame: 10
+      HitGroup: 0
+      Hit:
+        Damage: 7
+        EnemyImpulse: {x: 1.8, y: 7}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 18
+        Hitstop: 3
+        Rehit: 0
+        JugglePower: 10.5
+        ArmorDamage: 9.8
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 7
+        Offset: {x: 0.9, y: 1.05}
+        Size: {x: 2.4, y: 2.1}
+      - Frame: 9
+        Offset: {x: 1.1, y: 1.05}
+        Size: {x: 2.4, y: 2.1}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 7
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 9
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: ragIllusionCharged
+    Title: Vanishing Act
+    Action: 2
+    Startup: 14
+    Active: 4
+    Recovery: 0
+    HitboxOffset: {x: 1, y: 1.1}
+    HitboxSize: {x: 2.6, y: 2.5}
+    Damage: 13
+    Launch: {x: 3, y: 10}
+    Hitstun: 23
+    Hitstop: 4
+    Rehit: 0
+    CancelOpen: 14
+    CancelClose: 17
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 1
+    BlinkRange: 5
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 14
+      EndFrame: 18
+      HitGroup: 0
+      Hit:
+        Damage: 13
+        EnemyImpulse: {x: 3, y: 10}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 23
+        Hitstop: 4
+        Rehit: 0
+        JugglePower: 19.5
+        ArmorDamage: 18.199999
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 14
+        Offset: {x: 0.9, y: 1.1}
+        Size: {x: 2.6, y: 2.5}
+      - Frame: 17
+        Offset: {x: 1.1, y: 1.1}
+        Size: {x: 2.6, y: 2.5}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 14
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 17
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: suitStrong
+    Title: Gigatitanenklatsch
+    Action: 1
+    Startup: 10
+    Active: 5
+    Recovery: 0
+    HitboxOffset: {x: 1.3, y: 1}
+    HitboxSize: {x: 3.1, y: 2.1}
+    Damage: 19
+    Launch: {x: 6, y: 8}
+    Hitstun: 22
+    Hitstop: 5
+    Rehit: 0
+    CancelOpen: 10
+    CancelClose: 14
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 1.5, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 10
+      EndFrame: 15
+      HitGroup: 0
+      Hit:
+        Damage: 19
+        EnemyImpulse: {x: 6, y: 8}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 22
+        Hitstop: 5
+        Rehit: 0
+        JugglePower: 30
+        ArmorDamage: 30
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 10
+        Offset: {x: 1.1999999, y: 1}
+        Size: {x: 3.1, y: 2.1}
+      - Frame: 14
+        Offset: {x: 1.4, y: 1}
+        Size: {x: 3.1, y: 2.1}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 10
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 14
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: suitJester
+    Title: Jester Crescendo
+    Action: 1
+    Startup: 5
+    Active: 8
+    Recovery: 0
+    HitboxOffset: {x: 1, y: 1}
+    HitboxSize: {x: 2, y: 1.6}
+    Damage: 3.5
+    Launch: {x: 1, y: 5}
+    Hitstun: 14
+    Hitstop: 1
+    Rehit: 5
+    CancelOpen: 5
+    CancelClose: 12
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 5
+      EndFrame: 13
+      HitGroup: 0
+      Hit:
+        Damage: 3.5
+        EnemyImpulse: {x: 1, y: 5}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 14
+        Hitstop: 1
+        Rehit: 5
+        JugglePower: 8
+        ArmorDamage: 6
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 5
+        Offset: {x: 0.9, y: 0.9}
+        Size: {x: 2, y: 1.8}
+      - Frame: 12
+        Offset: {x: 1.1, y: 0.95}
+        Size: {x: 2, y: 1.8}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 5
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 12
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: suitIllusion
+    Title: Mirror Cut
+    Action: 1
+    Startup: 5
+    Active: 3
+    Recovery: 0
+    HitboxOffset: {x: 1, y: 1}
+    HitboxSize: {x: 2.5, y: 1.9}
+    Damage: 9
+    Launch: {x: 2, y: 6}
+    Hitstun: 17
+    Hitstop: 3
+    Rehit: 0
+    CancelOpen: 5
+    CancelClose: 7
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 3, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 5
+      EndFrame: 8
+      HitGroup: 0
+      Hit:
+        Damage: 9
+        EnemyImpulse: {x: 2, y: 6}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 17
+        Hitstop: 3
+        Rehit: 0
+        JugglePower: 13.5
+        ArmorDamage: 12.599999
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 5
+        Offset: {x: 0.9, y: 1}
+        Size: {x: 2.5, y: 1.9}
+      - Frame: 7
+        Offset: {x: 1.1, y: 1}
+        Size: {x: 2.5, y: 1.9}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 5
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 7
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: trickStrong
+    Title: Strongman Bound
+    Action: 3
+    Startup: 3
+    Active: 3
+    Recovery: 0
+    HitboxOffset: {x: 0.65, y: 0.8}
+    HitboxSize: {x: 1.8, y: 2.1}
+    Damage: 4
+    Launch: {x: 1, y: 8}
+    Hitstun: 15
+    Hitstop: 2
+    Rehit: 0
+    CancelOpen: 3
+    CancelClose: 5
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 1.5, y: 12}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 3
+      EndFrame: 6
+      HitGroup: 0
+      Hit:
+        Damage: 4
+        EnemyImpulse: {x: 1, y: 8}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 15
+        Hitstop: 2
+        Rehit: 0
+        JugglePower: 8
+        ArmorDamage: 6
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 3
+        Offset: {x: 0.54999995, y: 0.8}
+        Size: {x: 1.8, y: 2.1}
+      - Frame: 5
+        Offset: {x: 0.75, y: 0.8}
+        Size: {x: 1.8, y: 2.1}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 3
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 5
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: trickJester
+    Title: Jester Step
+    Action: 3
+    Startup: 2
+    Active: 3
+    Recovery: 0
+    HitboxOffset: {x: 1, y: 1}
+    HitboxSize: {x: 2, y: 1.6}
+    Damage: 3
+    Launch: {x: 1, y: 5}
+    Hitstun: 13
+    Hitstop: 1
+    Rehit: 0
+    CancelOpen: 2
+    CancelClose: 4
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 5, y: 8}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 2
+      EndFrame: 5
+      HitGroup: 0
+      Hit:
+        Damage: 3
+        EnemyImpulse: {x: 1, y: 5}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 13
+        Hitstop: 1
+        Rehit: 0
+        JugglePower: 8
+        ArmorDamage: 6
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 2
+        Offset: {x: 0.9, y: 0.9}
+        Size: {x: 2, y: 1.8}
+      - Frame: 4
+        Offset: {x: 1.1, y: 0.95}
+        Size: {x: 2, y: 1.8}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 2
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 4
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: trickIllusion
+    Title: Slip Through
+    Action: 3
+    Startup: 2
+    Active: 2
+    Recovery: 0
+    HitboxOffset: {x: 1, y: 1}
+    HitboxSize: {x: 2, y: 1.6}
+    Damage: 0
+    Launch: {x: 0, y: 0}
+    Hitstun: 0
+    Hitstop: 0
+    Rehit: 0
+    CancelOpen: 2
+    CancelClose: 3
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: 2}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 1
+    BlinkRange: 5
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes: []
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 2
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 3
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: ragJester2
+    Title: Jester Rattle II
+    Action: 2
+    Startup: 6
+    Active: 4
+    Recovery: 0
+    HitboxOffset: {x: 1, y: 1}
+    HitboxSize: {x: 2, y: 1.6}
+    Damage: 5
+    Launch: {x: 1.1, y: 5.5}
+    Hitstun: 14
+    Hitstop: 2
+    Rehit: 0
+    CancelOpen: 6
+    CancelClose: 9
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 6
+      EndFrame: 10
+      HitGroup: 0
+      Hit:
+        Damage: 5
+        EnemyImpulse: {x: 1.1, y: 5.5}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 14
+        Hitstop: 2
+        Rehit: 0
+        JugglePower: 8
+        ArmorDamage: 6
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 6
+        Offset: {x: 0.9, y: 0.9}
+        Size: {x: 2, y: 1.8}
+      - Frame: 9
+        Offset: {x: 1.1, y: 0.95}
+        Size: {x: 2, y: 1.8}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 6
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 9
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: ragJesterEnd
+    Title: "Jester Rattle \xB7 Cierre"
+    Action: 2
+    Startup: 8
+    Active: 4
+    Recovery: 2
+    HitboxOffset: {x: 1, y: 1}
+    HitboxSize: {x: 2, y: 1.6}
+    Damage: 9
+    Launch: {x: 9, y: -7}
+    Hitstun: 18
+    Hitstop: 4
+    Rehit: 0
+    CancelOpen: 8
+    CancelClose: 13
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.2
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 1
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 8
+      EndFrame: 12
+      HitGroup: 0
+      Hit:
+        Damage: 9
+        EnemyImpulse: {x: 9, y: -7}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 18
+        Hitstop: 4
+        Rehit: 0
+        JugglePower: 13.5
+        ArmorDamage: 12.599999
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 8
+        Offset: {x: 0.9, y: 0.9}
+        Size: {x: 2, y: 1.8}
+      - Frame: 11
+        Offset: {x: 1.1, y: 0.95}
+        Size: {x: 2, y: 1.8}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 8
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 13
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: airShot
+    Title: Balloon Shot
+    Action: 2
+    Startup: 4
+    Active: 2
+    Recovery: 2
+    HitboxOffset: {x: 3.2, y: 1.1}
+    HitboxSize: {x: 6.4, y: 1.4}
+    Damage: 2
+    Launch: {x: 0.3, y: 5}
+    Hitstun: 9
+    Hitstop: 1
+    Rehit: 0
+    CancelOpen: 4
+    CancelClose: 7
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.8
+    StartImpulseMode: 1
+    GravityScale: 0.75
+    Finisher: 0
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 4
+      EndFrame: 6
+      HitGroup: 0
+      Hit:
+        Damage: 2
+        EnemyImpulse: {x: 0.3, y: 5}
+        EnemyVelocityMode: 1
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 9
+        Hitstop: 1
+        Rehit: 0
+        JugglePower: 6
+        ArmorDamage: 2
+        Correction: 0
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 4
+        Offset: {x: 3.1000001, y: 1.1}
+        Size: {x: 6.4, y: 1.4}
+      - Frame: 5
+        Offset: {x: 3.3, y: 1.1}
+        Size: {x: 6.4, y: 1.4}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 4
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 7
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  - Id: heavyDiagonal
+    Title: Strongman Diagonal
+    Action: 2
+    Startup: 16
+    Active: 5
+    Recovery: 2
+    HitboxOffset: {x: 1.7, y: 0.1}
+    HitboxSize: {x: 2.7, y: 2.6}
+    Damage: 16
+    Launch: {x: 6, y: -8}
+    Hitstun: 23
+    Hitstop: 4
+    Rehit: 0
+    CancelOpen: 16
+    CancelClose: 22
+    CancelRequiresHit: 1
+    Cancels: 0
+    Impulse: {x: 4, y: -3}
+    MomentumRetention: 0.2
+    VerticalMomentumRetention: 0.7
+    StartImpulseMode: 1
+    GravityScale: 1
+    Finisher: 1
+    FollowOnHold: 0
+    FollowFrame: 6
+    FollowImpulse: {x: 0, y: 13}
+    BlinkToTarget: 0
+    BlinkRange: 4
+    AnimationClip: {fileID: 0}
+    PreviewPrefab: {fileID: 0}
+    AnimationSpeed: 1
+    Hitboxes:
+    - Name: Impacto
+      StartFrame: 16
+      EndFrame: 21
+      HitGroup: 0
+      Hit:
+        Damage: 16
+        EnemyImpulse: {x: 6, y: -8}
+        EnemyVelocityMode: 0
+        AttackerImpulse: {x: 0, y: 0}
+        AttackerVelocityMode: 1
+        Hitstun: 23
+        Hitstop: 4
+        Rehit: 0
+        JugglePower: 30
+        ArmorDamage: 28
+        Correction: 1
+        PreferredDistance: 1.15
+        MaxCorrection: 0.45
+        CorrectionSpeed: 9
+        PlayerCorrectionShare: 0.3
+      Keys:
+      - Frame: 16
+        Offset: {x: 1.6, y: 0.1}
+        Size: {x: 2.7, y: 2.6}
+      - Frame: 20
+        Offset: {x: 2.15, y: -0.8}
+        Size: {x: 2.7, y: 2.6}
+    Poses:
+    - Frame: 0
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: 7
+      FrontArmAngle: -25
+      RearArmAngle: 15
+      FrontLegAngle: 0
+      RearLegAngle: 0
+    - Frame: 16
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -10
+      FrontArmAngle: 100
+      RearArmAngle: -20
+      FrontLegAngle: -8
+      RearLegAngle: 12
+    - Frame: 22
+      BodyOffset: {x: 0, y: 0}
+      BodyAngle: -3
+      FrontArmAngle: 35
+      RearArmAngle: 0
+      FrontLegAngle: 0
+      RearLegAngle: 0
+  SchemaVersion: 2
+  Bindings:
+  - Name: "B\xE1sicos suelo"
+    Action: 1
+    Context: 1
+    Direction: 1
+    Stance: 1
+    AnyRag: 1
+    Rag: 0
+    Priority: 10
+    SequenceTimeout: 32
+    Sequence:
+    - jab1
+    - jab2
+    - jab3
+    ChargedMoveId: 
+    ChargeFrames: 18
+  - Name: "B\xE1sico avanzando"
+    Action: 1
+    Context: 1
+    Direction: 2
+    Stance: 1
+    AnyRag: 1
+    Rag: 0
+    Priority: 10
+    SequenceTimeout: 32
+    Sequence:
+    - slash
+    ChargedMoveId: 
+    ChargeFrames: 18
+  - Name: Lanzador abajo
+    Action: 1
+    Context: 1
+    Direction: 4
+    Stance: 1
+    AnyRag: 1
+    Rag: 0
+    Priority: 20
+    SequenceTimeout: 32
+    Sequence:
+    - launcher
+    ChargedMoveId: 
+    ChargeFrames: 18
+  - Name: Lanzador arriba
+    Action: 1
+    Context: 1
+    Direction: 3
+    Stance: 1
+    AnyRag: 1
+    Rag: 0
+    Priority: 20
+    SequenceTimeout: 32
+    Sequence:
+    - launcher
+    ChargedMoveId: 
+    ChargeFrames: 18
+  - Name: "B\xE1sicos aire"
+    Action: 1
+    Context: 2
+    Direction: 0
+    Stance: 1
+    AnyRag: 1
+    Rag: 0
+    Priority: 5
+    SequenceTimeout: 32
+    Sequence:
+    - air1
+    - air2
+    - air3
+    ChargedMoveId: 
+    ChargeFrames: 18
+  - Name: Picado
+    Action: 1
+    Context: 2
+    Direction: 4
+    Stance: 1
+    AnyRag: 1
+    Rag: 0
+    Priority: 20
+    SequenceTimeout: 32
+    Sequence:
+    - dive
+    ChargedMoveId: 
+    ChargeFrames: 18
+  - Name: Traje Strongman
+    Action: 1
+    Context: 0
+    Direction: 0
+    Stance: 2
+    AnyRag: 0
+    Rag: 0
+    Priority: 30
+    SequenceTimeout: 32
+    Sequence:
+    - suitStrong
+    ChargedMoveId: 
+    ChargeFrames: 18
+  - Name: Traje Jester
+    Action: 1
+    Context: 0
+    Direction: 0
+    Stance: 2
+    AnyRag: 0
+    Rag: 1
+    Priority: 30
+    SequenceTimeout: 32
+    Sequence:
+    - suitJester
+    ChargedMoveId: 
+    ChargeFrames: 18
+  - Name: Traje Ilusionista
+    Action: 1
+    Context: 0
+    Direction: 0
+    Stance: 2
+    AnyRag: 0
+    Rag: 2
+    Priority: 30
+    SequenceTimeout: 32
+    Sequence:
+    - suitIllusion
+    ChargedMoveId: 
+    ChargeFrames: 18
+  - Name: Rag Strongman
+    Action: 2
+    Context: 0
+    Direction: 0
+    Stance: 0
+    AnyRag: 0
+    Rag: 0
+    Priority: 0
+    SequenceTimeout: 32
+    Sequence:
+    - ragStrong
+    ChargedMoveId: ragStrongCharged
+    ChargeFrames: 18
+  - Name: Rag Jester
+    Action: 2
+    Context: 0
+    Direction: 0
+    Stance: 0
+    AnyRag: 0
+    Rag: 1
+    Priority: 0
+    SequenceTimeout: 32
+    Sequence:
+    - ragJester
+    - ragJester2
+    - ragJesterEnd
+    ChargedMoveId: ragJesterCharged
+    ChargeFrames: 18
+  - Name: Rag Ilusionista
+    Action: 2
+    Context: 0
+    Direction: 0
+    Stance: 0
+    AnyRag: 0
+    Rag: 2
+    Priority: 0
+    SequenceTimeout: 32
+    Sequence:
+    - ragIllusion
+    ChargedMoveId: ragIllusionCharged
+    ChargeFrames: 18
+  - Name: "Disparo a\xE9reo arriba"
+    Action: 2
+    Context: 2
+    Direction: 3
+    Stance: 0
+    AnyRag: 1
+    Rag: 0
+    Priority: 40
+    SequenceTimeout: 32
+    Sequence:
+    - airShot
+    ChargedMoveId: 
+    ChargeFrames: 18
+  - Name: Diagonal fuerte abajo
+    Action: 2
+    Context: 2
+    Direction: 4
+    Stance: 0
+    AnyRag: 0
+    Rag: 0
+    Priority: 40
+    SequenceTimeout: 32
+    Sequence:
+    - heavyDiagonal
+    ChargedMoveId: 
+    ChargeFrames: 18
+  - Name: Trick Strongman
+    Action: 3
+    Context: 0
+    Direction: 0
+    Stance: 0
+    AnyRag: 0
+    Rag: 0
+    Priority: 0
+    SequenceTimeout: 32
+    Sequence:
+    - trickStrong
+    ChargedMoveId: 
+    ChargeFrames: 18
+  - Name: Trick Jester
+    Action: 3
+    Context: 0
+    Direction: 0
+    Stance: 0
+    AnyRag: 0
+    Rag: 1
+    Priority: 0
+    SequenceTimeout: 32
+    Sequence:
+    - trickJester
+    ChargedMoveId: 
+    ChargeFrames: 18
+  - Name: Trick Ilusionista
+    Action: 3
+    Context: 0
+    Direction: 0
+    Stance: 0
+    AnyRag: 0
+    Rag: 2
+    Priority: 0
+    SequenceTimeout: 32
+    Sequence:
+    - trickIllusion
+    ChargedMoveId: 
+    ChargeFrames: 18

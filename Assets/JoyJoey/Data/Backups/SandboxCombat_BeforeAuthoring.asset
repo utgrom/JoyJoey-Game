@@ -1,0 +1,414 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4551dcadce32dd04b83ad1823d2fea90, type: 3}
+  m_Name: SandboxCombat_BeforeAuthoring
+  m_EditorClassIdentifier: JoyJoey.Runtime::JoyJoey.Sandbox.CombatCatalog
+  Moves:
+  - Id: jab1
+    Title: Balloon Cuts I
+    Action: 1
+    Startup: 4
+    Active: 3
+    Recovery: 12
+    HitboxOffset: {x: 1, y: 0.9}
+    HitboxSize: {x: 2, y: 1.8}
+    Damage: 5
+    Launch: {x: 1.1, y: 0.8}
+    Hitstun: 25
+    Hitstop: 3
+    Rehit: 0
+    CancelOpen: 5
+    CancelClose: 16
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 1
+  - Id: jab2
+    Title: Balloon Cuts II
+    Action: 1
+    Startup: 4
+    Active: 3
+    Recovery: 12
+    HitboxOffset: {x: 1, y: 0.9}
+    HitboxSize: {x: 2, y: 1.8}
+    Damage: 5
+    Launch: {x: 1.3, y: 1.2}
+    Hitstun: 27
+    Hitstop: 3
+    Rehit: 0
+    CancelOpen: 5
+    CancelClose: 16
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 1
+  - Id: jab3
+    Title: Balloon Cuts III
+    Action: 1
+    Startup: 5
+    Active: 4
+    Recovery: 17
+    HitboxOffset: {x: 1, y: 0.9}
+    HitboxSize: {x: 2, y: 1.8}
+    Damage: 9
+    Launch: {x: 5, y: 4}
+    Hitstun: 31
+    Hitstop: 5
+    Rehit: 0
+    CancelOpen: 7
+    CancelClose: 22
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 1
+  - Id: slash
+    Title: Balloon Slash
+    Action: 1
+    Startup: 6
+    Active: 5
+    Recovery: 17
+    HitboxOffset: {x: 1, y: 0.9}
+    HitboxSize: {x: 2.2, y: 1.8}
+    Damage: 8
+    Launch: {x: 3.2, y: 2}
+    Hitstun: 30
+    Hitstop: 4
+    Rehit: 0
+    CancelOpen: 8
+    CancelClose: 23
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 6, y: 0}
+    MomentumRetention: 1
+  - Id: launcher
+    Title: Pop Launch
+    Action: 1
+    Startup: 6
+    Active: 4
+    Recovery: 17
+    HitboxOffset: {x: 0.9, y: 0.9}
+    HitboxSize: {x: 2, y: 2.4}
+    Damage: 7
+    Launch: {x: 1.2, y: 11}
+    Hitstun: 42
+    Hitstop: 5
+    Rehit: 0
+    CancelOpen: 8
+    CancelClose: 24
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 0.5, y: 2}
+    MomentumRetention: 1
+  - Id: air1
+    Title: Balloon Air-Raid I
+    Action: 1
+    Startup: 4
+    Active: 4
+    Recovery: 12
+    HitboxOffset: {x: 1, y: 0.9}
+    HitboxSize: {x: 2, y: 1.8}
+    Damage: 4
+    Launch: {x: 1.2, y: 3}
+    Hitstun: 27
+    Hitstop: 3
+    Rehit: 0
+    CancelOpen: 6
+    CancelClose: 17
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 1
+  - Id: air2
+    Title: Balloon Air-Raid II
+    Action: 1
+    Startup: 4
+    Active: 4
+    Recovery: 12
+    HitboxOffset: {x: 1, y: 0.9}
+    HitboxSize: {x: 2, y: 1.8}
+    Damage: 4
+    Launch: {x: 1.5, y: 3.5}
+    Hitstun: 29
+    Hitstop: 3
+    Rehit: 0
+    CancelOpen: 6
+    CancelClose: 17
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 1
+  - Id: air3
+    Title: Balloon Air-Raid III
+    Action: 1
+    Startup: 5
+    Active: 4
+    Recovery: 17
+    HitboxOffset: {x: 1, y: 0.9}
+    HitboxSize: {x: 2, y: 1.8}
+    Damage: 8
+    Launch: {x: 5, y: 5}
+    Hitstun: 32
+    Hitstop: 5
+    Rehit: 0
+    CancelOpen: 7
+    CancelClose: 23
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 1
+  - Id: dive
+    Title: Pop Drop
+    Action: 1
+    Startup: 5
+    Active: 14
+    Recovery: 13
+    HitboxOffset: {x: 0.45, y: 0.35}
+    HitboxSize: {x: 1.7, y: 1.9}
+    Damage: 9
+    Launch: {x: 2, y: 12}
+    Hitstun: 37
+    Hitstop: 5
+    Rehit: 0
+    CancelOpen: 7
+    CancelClose: 28
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 0, y: -17}
+    MomentumRetention: 1
+  - Id: ragStrong
+    Title: Titanenklatsch
+    Action: 2
+    Startup: 11
+    Active: 5
+    Recovery: 22
+    HitboxOffset: {x: 1.25, y: 1}
+    HitboxSize: {x: 2.7, y: 2}
+    Damage: 14
+    Launch: {x: 5, y: 6}
+    Hitstun: 34
+    Hitstop: 6
+    Rehit: 0
+    CancelOpen: 13
+    CancelClose: 31
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 2.5, y: 0}
+    MomentumRetention: 1
+  - Id: ragStrongCharged
+    Title: Titanenklatsch cargado
+    Action: 2
+    Startup: 22
+    Active: 6
+    Recovery: 27
+    HitboxOffset: {x: 1.3, y: 1.1}
+    HitboxSize: {x: 3.2, y: 2.6}
+    Damage: 24
+    Launch: {x: 7, y: 13}
+    Hitstun: 47
+    Hitstop: 8
+    Rehit: 0
+    CancelOpen: 25
+    CancelClose: 46
+    CancelRequiresHit: 1
+    Cancels: 60
+    Impulse: {x: 3.5, y: 0}
+    MomentumRetention: 1
+  - Id: ragJester
+    Title: Jester Rattle
+    Action: 2
+    Startup: 5
+    Active: 16
+    Recovery: 14
+    HitboxOffset: {x: 1, y: 0.9}
+    HitboxSize: {x: 2, y: 1.8}
+    Damage: 2.5
+    Launch: {x: 0.3, y: 2}
+    Hitstun: 22
+    Hitstop: 2
+    Rehit: 4
+    CancelOpen: 7
+    CancelClose: 29
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 1
+  - Id: ragJesterCharged
+    Title: Jester Encore
+    Action: 2
+    Startup: 10
+    Active: 20
+    Recovery: 17
+    HitboxOffset: {x: 1.05, y: 1.05}
+    HitboxSize: {x: 2.3, y: 2.2}
+    Damage: 2.5
+    Launch: {x: 0.3, y: 2}
+    Hitstun: 24
+    Hitstop: 2
+    Rehit: 4
+    CancelOpen: 12
+    CancelClose: 40
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 1
+  - Id: ragIllusion
+    Title: Curtain Call
+    Action: 2
+    Startup: 7
+    Active: 4
+    Recovery: 15
+    HitboxOffset: {x: 1, y: 0.9}
+    HitboxSize: {x: 2.3, y: 2.1}
+    Damage: 7
+    Launch: {x: 1.8, y: 7}
+    Hitstun: 34
+    Hitstop: 4
+    Rehit: 0
+    CancelOpen: 9
+    CancelClose: 22
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 4, y: 1}
+    MomentumRetention: 1
+  - Id: ragIllusionCharged
+    Title: Vanishing Act
+    Action: 2
+    Startup: 16
+    Active: 5
+    Recovery: 19
+    HitboxOffset: {x: 0.95, y: 1.1}
+    HitboxSize: {x: 2.6, y: 2.5}
+    Damage: 13
+    Launch: {x: 3, y: 10}
+    Hitstun: 40
+    Hitstop: 6
+    Rehit: 0
+    CancelOpen: 18
+    CancelClose: 34
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 1
+  - Id: suitStrong
+    Title: Gigatitanenklatsch
+    Action: 1
+    Startup: 10
+    Active: 6
+    Recovery: 23
+    HitboxOffset: {x: 1.4, y: 1}
+    HitboxSize: {x: 3.4, y: 2.1}
+    Damage: 19
+    Launch: {x: 6.5, y: 8}
+    Hitstun: 39
+    Hitstop: 7
+    Rehit: 0
+    CancelOpen: 13
+    CancelClose: 32
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 2, y: 0}
+    MomentumRetention: 1
+  - Id: suitJester
+    Title: Jester Crescendo
+    Action: 1
+    Startup: 4
+    Active: 16
+    Recovery: 12
+    HitboxOffset: {x: 1, y: 0.9}
+    HitboxSize: {x: 2.2, y: 2.1}
+    Damage: 3.5
+    Launch: {x: 0.5, y: 3}
+    Hitstun: 27
+    Hitstop: 2
+    Rehit: 4
+    CancelOpen: 6
+    CancelClose: 27
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 0, y: 0}
+    MomentumRetention: 1
+  - Id: suitIllusion
+    Title: Mirror Cut
+    Action: 1
+    Startup: 5
+    Active: 4
+    Recovery: 13
+    HitboxOffset: {x: 1, y: 0.9}
+    HitboxSize: {x: 2.6, y: 1.9}
+    Damage: 9
+    Launch: {x: 2, y: 6}
+    Hitstun: 31
+    Hitstop: 4
+    Rehit: 0
+    CancelOpen: 7
+    CancelClose: 19
+    CancelRequiresHit: 1
+    Cancels: 63
+    Impulse: {x: 4.5, y: 0}
+    MomentumRetention: 1
+  - Id: trickStrong
+    Title: Strongman Bound
+    Action: 3
+    Startup: 3
+    Active: 5
+    Recovery: 14
+    HitboxOffset: {x: 0.65, y: 0.8}
+    HitboxSize: {x: 1.8, y: 2.1}
+    Damage: 4
+    Launch: {x: 1, y: 8}
+    Hitstun: 30
+    Hitstop: 3
+    Rehit: 0
+    CancelOpen: 5
+    CancelClose: 18
+    CancelRequiresHit: 0
+    Cancels: 19
+    Impulse: {x: 2, y: 12}
+    MomentumRetention: 1
+  - Id: trickJester
+    Title: Jester Step
+    Action: 3
+    Startup: 2
+    Active: 4
+    Recovery: 12
+    HitboxOffset: {x: 1, y: 0.9}
+    HitboxSize: {x: 2, y: 1.8}
+    Damage: 3
+    Launch: {x: 1, y: 5}
+    Hitstun: 25
+    Hitstop: 2
+    Rehit: 0
+    CancelOpen: 4
+    CancelClose: 15
+    CancelRequiresHit: 0
+    Cancels: 11
+    Impulse: {x: 6, y: 8}
+    MomentumRetention: 1
+  - Id: trickIllusion
+    Title: Slip Through
+    Action: 3
+    Startup: 2
+    Active: 3
+    Recovery: 12
+    HitboxOffset: {x: 1, y: 0.9}
+    HitboxSize: {x: 2, y: 1.8}
+    Damage: 0
+    Launch: {x: 0, y: 0}
+    Hitstun: 0
+    Hitstop: 0
+    Rehit: 0
+    CancelOpen: 4
+    CancelClose: 14
+    CancelRequiresHit: 0
+    Cancels: 27
+    Impulse: {x: 5, y: 2}
+    MomentumRetention: 1

@@ -1,0 +1,19 @@
+{
+  "name": "JoyJoey.Tests.Editor",
+  "rootNamespace": "JoyJoey.Sandbox.Tests",
+  "references": [
+    "JoyJoey.Runtime",
+    "JoyJoey.Editor",
+    "Unity.InputSystem",
+    "Unity.InputSystem.TestFramework",
+    "UnityEngine.UI",
+    "Unity.RenderPipelines.Core.Runtime",
+    "Unity.RenderPipelines.Universal.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

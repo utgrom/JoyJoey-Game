@@ -1,0 +1,10 @@
+{
+  "name": "JoyJoey.Runtime",
+  "rootNamespace": "JoyJoey.Sandbox",
+  "references": [
+    "Unity.InputSystem",
+    "UnityEngine.UI",
+    "Unity.RenderPipelines.Core.Runtime",
+    "Unity.RenderPipelines.Universal.Runtime"
+  ]
+}
