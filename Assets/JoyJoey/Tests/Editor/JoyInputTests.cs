@@ -89,9 +89,14 @@ namespace JoyJoey.Sandbox.Tests
             var down = GameplayControls.GetRows(true).Single(row => row.Name == "Abajo");
             try
             {
+                Assert.That(GameplayControls.DirectionPath("left", false), Is.EqualTo("<Keyboard>/a"));
+                Assert.That(GameplayControls.DirectionPath("right", false), Is.EqualTo("<Keyboard>/d"));
+                Assert.That(GameplayControls.DirectionPath("down", true), Is.EqualTo("<Gamepad>/dpad/down"));
                 Assert.That(GameplayControls.TryRebind(down, pad.startButton, out _), Is.False);
                 Assert.That(GameplayControls.TryRebind(down, keyboard.sKey, out _), Is.False);
                 Assert.That(GameplayControls.TryRebind(down, pad.buttonWest, out string error), Is.True, error);
+                Assert.That(GameplayControls.DirectionPath("down", true), Is.EqualTo("<Gamepad>/buttonWest"));
+                Assert.That(GameplayControls.ActionPath(nameof(ActionId.Basic), true), Is.EqualTo("<Gamepad>/dpad/down"));
 
                 Pad(new GamepadState().WithButton(GamepadButton.DpadDown));
                 var attack = input.ConsumeFrame();

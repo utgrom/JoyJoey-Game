@@ -20,7 +20,6 @@ namespace JoyJoey.Game.Editor
         public const string OptionsPrefabPath = "Assets/JoyJoey/Prefabs/AudioOptions.prefab";
         public const string ClipsPath = "Assets/JoyJoey/Audio/Prototype";
 
-        [MenuItem("Joy Joey/Etapa 3/Preparar audio y opciones")]
         public static void EnsureAssets()
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling || EditorApplication.isUpdating)
@@ -308,7 +307,6 @@ namespace JoyJoey.Game.Editor
             importer.SaveAndReimport();
         }
 
-        [MenuItem("Joy Joey/Etapa 3/Compilar juego Windows")]
         public static void BuildWindows()
         {
             EnsureAssets();

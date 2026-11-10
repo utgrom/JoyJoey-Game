@@ -22,12 +22,13 @@ namespace JoyJoey.Game.UI
         const float RowSpacing = 56;
 
         readonly List<Selectable> _selectables = new List<Selectable>();
-        readonly List<(GameplayControls.BindingRow Row, Text Name, Text Value)> _labels =
-            new List<(GameplayControls.BindingRow, Text, Text)>();
+        readonly List<(GameplayControls.BindingRow Row, Text Name, InputPromptView Value)> _labels =
+            new List<(GameplayControls.BindingRow, Text, InputPromptView)>();
         MenuInputCoordinator _input;
         ScrollRect _scroll;
         RectTransform _content;
-        Text _device, _status, _deadzoneValue, _captureMessage, _captureCancel;
+        Text _device, _status, _deadzoneValue, _captureMessage;
+        InputPromptView _captureCancel;
         Slider _deadzone;
         GameObject _captureLayer, _previousSelection;
         Font _font;
@@ -176,7 +177,7 @@ namespace JoyJoey.Game.UI
                 var row = Row(Caption(binding), position++, out var name);
                 var value = Label("Asignación", row, "", 23, TextAnchor.MiddleRight, Paper,
                     new Vector2(.50f, 0), Vector2.one, Vector2.zero, new Vector2(-20, 0));
-                _labels.Add((binding, name, value));
+                _labels.Add((binding, name, InputPromptView.Attach(value, 40)));
                 if (!binding.IsEditable) continue;
                 var button = row.gameObject.AddComponent<Button>();
                 var image = row.GetComponent<Image>();
@@ -208,7 +209,8 @@ namespace JoyJoey.Game.UI
             foreach (var label in _labels)
             {
                 label.Name.text = Caption(label.Row);
-                label.Value.text = GameplayControls.GetLabel(label.Row, _family == MenuInputFamily.PlayStation);
+                label.Value.Set(GameplayControls.GetPath(label.Row), _family,
+                    GameplayControls.GetLabel(label.Row, _family == MenuInputFamily.PlayStation));
             }
             if (_deadzone)
             {
@@ -225,7 +227,8 @@ namespace JoyJoey.Game.UI
             _binding = row;
             _captureFrame = Time.frameCount;
             _captureMessage.text = "Pulsa un botón para asignarlo a esta acción";
-            _captureCancel.text = GamepadProfile ? "Start · Cancelar" : "Esc · Cancelar";
+            _captureCancel.Set(GamepadProfile ? "<Gamepad>/start" : "<Keyboard>/escape", _family,
+                GamepadProfile ? "Start" : "Esc", "Cancelar");
             _captureLayer.SetActive(true);
             _captureLayer.transform.SetAsLastSibling();
             _input.SuspendInput();
@@ -322,7 +325,8 @@ namespace JoyJoey.Game.UI
             var layer = NewRect("Capturar asignación", transform, Vector2.zero, Vector2.one);
             layer.gameObject.AddComponent<Image>().color = new Color(.025f, .028f, .045f, .96f);
             _captureMessage = Label("Mensaje", layer, "", 28, TextAnchor.MiddleCenter, Paper, new Vector2(.17f, .44f), new Vector2(.83f, .59f));
-            _captureCancel = Label("Cancelar", layer, "", 20, TextAnchor.MiddleCenter, Muted, new Vector2(.17f, .38f), new Vector2(.83f, .44f));
+            _captureCancel = InputPromptView.Attach(Label("Cancelar", layer, "", 20, TextAnchor.MiddleCenter, Muted,
+                new Vector2(.17f, .38f), new Vector2(.83f, .44f)));
             _captureLayer = layer.gameObject;
             _captureLayer.SetActive(false);
         }

@@ -15,7 +15,6 @@ namespace JoyJoey.Game.Editor
     /// <summary>Upgrades existing authored menus without replacing their pages or settings data.</summary>
     public static class MenuNavigationBuilder
     {
-        [MenuItem("Joy Joey/Interfaz/Preparar navegación y desplegables")]
         public static void EnsureAssets() => DisplayBuilder.EnsureAssets();
 
         public static void UpgradeExistingAssets()
@@ -116,7 +115,6 @@ namespace JoyJoey.Game.Editor
             advanced.navigation = navigation;
         }
 
-        [MenuItem("Joy Joey/Interfaz/Compilar juego Windows")]
         public static void BuildWindows()
         {
             DisplayBuilder.BuildWindows();

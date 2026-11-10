@@ -18,7 +18,6 @@ namespace JoyJoey.Game.Editor
         public const string RigPrefabPath = "Assets/JoyJoey/Resources/Game/DisplayRig.prefab";
         public const string OptionsPrefabPath = "Assets/JoyJoey/Prefabs/DisplayOptions.prefab";
 
-        [MenuItem("Joy Joey/Etapa 6/Preparar pantalla y gráficos")]
         public static void EnsureAssets()
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling || EditorApplication.isUpdating)
@@ -292,7 +291,6 @@ namespace JoyJoey.Game.Editor
             finally { if (root) PrefabUtility.UnloadPrefabContents(root); }
         }
 
-        [MenuItem("Joy Joey/Etapa 6/Compilar juego Windows")]
         public static void BuildWindows()
         {
             EnsureAssets(); AudioBuilder.BuildWindows();

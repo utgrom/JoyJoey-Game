@@ -43,6 +43,7 @@ namespace JoyJoey.Game.UI
         readonly Dictionary<int, Vector4> _padSticks = new Dictionary<int, Vector4>();
         GameObject _lastContentSelection;
         string _backLabel = "Volver", _confirmLabel = "Confirmar", _applyLabel = "Aplicar cambios";
+        InputPromptView _backPrompt, _confirmPrompt, _applyPrompt;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ResetState()
@@ -402,19 +403,27 @@ namespace JoyJoey.Game.UI
         }
         void RefreshHints()
         {
-            string back, confirm, apply;
-            if (!GamepadMode) { back = "ESC"; confirm = "J"; apply = _controlsDefaults ? "H" : "K"; }
-            else if (Family == MenuInputFamily.PlayStation)
+            if (!GamepadMode)
             {
-                bool glyphs = HintRight && HintRight.font && HintRight.font.HasCharacter('○') && HintRight.font.HasCharacter('×') && HintRight.font.HasCharacter('□');
-                back = glyphs ? "○" : "Círculo"; confirm = glyphs ? "×" : "Cruz";
-                apply = _controlsDefaults ? (ApplyHint && ApplyHint.font && ApplyHint.font.HasCharacter('△') ? "△" : "Triángulo") :
-                    (glyphs ? "□" : "Cuadrado");
+                SetPrompt(ref _backPrompt, HintLeft, "<Keyboard>/escape", "ESC", _backLabel);
+                SetPrompt(ref _confirmPrompt, HintRight, "<Keyboard>/j", "J", _confirmLabel);
+                SetPrompt(ref _applyPrompt, ApplyHint, _controlsDefaults ? "<Keyboard>/h" : "<Keyboard>/k",
+                    _controlsDefaults ? "H" : "K", _applyLabel);
+                return;
             }
-            else { back = "B"; confirm = "A"; apply = _controlsDefaults ? "Y" : "X"; }
-            if (HintLeft) HintLeft.text = back + "  " + _backLabel;
-            if (HintRight) HintRight.text = confirm + "  " + _confirmLabel;
-            if (ApplyHint) ApplyHint.text = apply + "  " + _applyLabel;
+
+            bool playStation = Family == MenuInputFamily.PlayStation;
+            SetPrompt(ref _backPrompt, HintLeft, "<Gamepad>/buttonEast", playStation ? "Círculo" : "B", _backLabel);
+            SetPrompt(ref _confirmPrompt, HintRight, "<Gamepad>/buttonSouth", playStation ? "Cruz" : "A", _confirmLabel);
+            SetPrompt(ref _applyPrompt, ApplyHint, _controlsDefaults ? "<Gamepad>/buttonNorth" : "<Gamepad>/buttonWest",
+                _controlsDefaults ? (playStation ? "Triángulo" : "Y") : (playStation ? "Cuadrado" : "X"), _applyLabel);
+        }
+
+        void SetPrompt(ref InputPromptView prompt, Text label, string path, string fallback, string caption)
+        {
+            if (!label) return;
+            if (!prompt) prompt = InputPromptView.Attach(label);
+            prompt.Set(path, Family, fallback, caption);
         }
         void OnDisable()
         {

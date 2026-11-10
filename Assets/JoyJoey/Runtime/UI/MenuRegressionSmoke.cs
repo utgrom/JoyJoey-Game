@@ -241,12 +241,17 @@ namespace JoyJoey.Game.UI
 
         void CheckHints(MenuInputCoordinator coordinator, bool keyboard, bool apply)
         {
-            string text = (coordinator.HintLeft ? coordinator.HintLeft.text : "") + " " + (coordinator.HintRight ? coordinator.HintRight.text : "") +
-                " " + (coordinator.ApplyHint ? coordinator.ApplyHint.text : "");
-            Check(text.Contains("Volver") && text.Contains("Confirmar"), "Footer shows the active Back and Confirm actions");
-            if (keyboard) Check(text.ToUpperInvariant().Contains("ESC") && text.Contains("J"), "Footer labels match keyboard shortcuts");
-            else Check(MenuInputCoordinator.GamepadMode && !text.ToUpperInvariant().Contains("ESC"), "Footer switches to gamepad button prompts");
-            if (apply) Check(text.Contains("Aplicar"), "Display footer exposes its Apply action");
+            Check(MenuInputCoordinator.GamepadMode == !keyboard, "Footer follows the last input device");
+            CheckHint(coordinator.HintLeft, keyboard ? "<Keyboard>/escape" : "<Gamepad>/buttonEast", "Volver");
+            CheckHint(coordinator.HintRight, keyboard ? "<Keyboard>/j" : "<Gamepad>/buttonSouth", "Confirmar");
+            if (apply) CheckHint(coordinator.ApplyHint, keyboard ? "<Keyboard>/k" : "<Gamepad>/buttonWest", "Aplicar cambios");
+        }
+        void CheckHint(Text label, string path, string caption)
+        {
+            var prompt = label ? label.GetComponentInParent<InputPromptView>() : null;
+            var expected = InputPromptSprites.Resolve(path, MenuInputCoordinator.Family);
+            Check(prompt && expected && prompt.DisplayedSprite == expected && prompt.ControlPath == path && label.text == caption,
+                "Footer displays the glyph for " + caption);
         }
         void ValidateList(Dropdown dropdown, string name)
         {

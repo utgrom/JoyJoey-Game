@@ -65,9 +65,11 @@ namespace JoyJoey.Sandbox.Tests
             var coordinator = MenuInputCoordinator.Ensure(events.GetComponent<EventSystem>());
             coordinator.SetHints(true, true, true, true);
             Assert.That(coordinator.HintRoot, Is.Not.Null);
-            Assert.That(coordinator.HintLeft.text, Does.Contain("ESC").And.Contain("Volver"));
-            Assert.That(coordinator.HintRight.text, Does.Contain("J").And.Contain("Confirmar"));
-            Assert.That(coordinator.ApplyHint.text, Does.Contain("K").And.Contain("Aplicar"));
+            AssertKeyboardHint(coordinator.HintLeft, "<Keyboard>/escape", "Volver");
+            AssertKeyboardHint(coordinator.HintRight, "<Keyboard>/j", "Confirmar");
+            AssertKeyboardHint(coordinator.ApplyHint, "<Keyboard>/k", "Aplicar cambios");
+            coordinator.SetHints(true, true, true, true, controlsDefaults: true);
+            AssertKeyboardHint(coordinator.ApplyHint, "<Keyboard>/h", "Aplicar cambios");
             bool back = false, apply = false;
             coordinator.BackRequested += () => back = true;
             coordinator.ApplyRequested += () => apply = true;
@@ -78,6 +80,31 @@ namespace JoyJoey.Sandbox.Tests
                 Assert.That(button.navigation.mode, Is.EqualTo(Navigation.Mode.None));
             coordinator.SetHints(false, false, false, false);
             Assert.That(coordinator.HintRoot.activeSelf, Is.False);
+        }
+
+        static void AssertKeyboardHint(Text label, string path, string caption)
+        {
+            var expected = InputPromptSprites.Resolve(path, MenuInputFamily.KeyboardMouse);
+            Assert.That(expected, Is.Not.Null);
+            var prompt = label.GetComponentInParent<InputPromptView>();
+            Assert.That(prompt, Is.Not.Null);
+            Assert.That(prompt.ControlPath, Is.EqualTo(path));
+            Assert.That(prompt.DisplayedSprite, Is.SameAs(expected));
+            Assert.That(label.text, Is.EqualTo(caption));
+        }
+
+        [Test]
+        public void InputPromptKeepsItsCaptionAndUsesTextWhenTheGlyphIsMissing()
+        {
+            _root = new GameObject("Prompt canvas", typeof(RectTransform), typeof(Canvas));
+            var label = new GameObject("Text", typeof(RectTransform), typeof(Text)).GetComponent<Text>();
+            label.transform.SetParent(_root.transform, false);
+            var prompt = InputPromptView.Attach(label);
+            prompt.Set("<Keyboard>/notARealKey", MenuInputFamily.KeyboardMouse, "Tecla", "Volver");
+            Assert.That(prompt.DisplayedSprite, Is.Null);
+            Assert.That(label.text, Is.EqualTo("Tecla  Volver"));
+            prompt.Set("<Keyboard>/escape", MenuInputFamily.KeyboardMouse, "Esc", "Volver");
+            AssertKeyboardHint(label, "<Keyboard>/escape", "Volver");
         }
 
         [Test]

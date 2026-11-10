@@ -37,15 +37,15 @@ namespace JoyJoey.Sandbox.Editor
                 EditorSceneManager.OpenScene(ScenePath);
         }
 
-        [MenuItem("Joy Joey/Abrir sandbox de combate")]
+        [MenuItem("Joy Joey/Escenas/Circo onírico (sandbox de combate)", false, 3)]
         public static void OpenSandbox()
         {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
-            EnsureAssets();
+            if (!File.Exists(ScenePath)) EnsureAssets();
             EditorSceneManager.OpenScene(ScenePath);
         }
 
-        [MenuItem("Joy Joey/Crear assets faltantes")]
+        [MenuItem("Joy Joey/Crear assets faltantes/Del sandbox")]
         public static void EnsureAssets()
         {
             if (EditorApplication.isCompiling || EditorApplication.isUpdating)

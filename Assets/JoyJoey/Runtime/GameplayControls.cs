@@ -107,16 +107,40 @@ namespace JoyJoey.Sandbox
             Changed?.Invoke();
         }
 
-        public static string GetLabel(BindingRow row, bool playStation)
+        public static string GetPath(BindingRow row)
         {
             EnsureLoaded();
-            return FormatPath(EffectivePath(row, _overrides), playStation);
+            return EffectivePath(row, _overrides);
         }
+
+        public static string GetLabel(BindingRow row, bool playStation) => FormatPath(GetPath(row), playStation);
 
         internal static string ActionLabel(string action, bool gamepad, bool playStation)
         {
+            var row = FindActionRow(action, gamepad);
+            return row == null ? null : GetLabel(row, playStation);
+        }
+
+        /// <summary>Effective path for the first editable binding of an action and device profile.</summary>
+        public static string ActionPath(string action, bool gamepad)
+        {
+            var row = FindActionRow(action, gamepad);
+            return row == null ? null : GetPath(row);
+        }
+
+        /// <summary>Effective path for a movement composite part: up, down, left or right.</summary>
+        public static string DirectionPath(string part, bool gamepad)
+        {
+            string key = "Move:" + gamepad + ":" + part;
             foreach (var row in GetRows(gamepad))
-                if (row.Action == action && row.IsEditable) return GetLabel(row, playStation);
+                if (Same(row.Key, key)) return GetPath(row);
+            return null;
+        }
+
+        static BindingRow FindActionRow(string action, bool gamepad)
+        {
+            foreach (var row in GetRows(gamepad))
+                if (row.Action == action && row.IsEditable) return row;
             return null;
         }
 

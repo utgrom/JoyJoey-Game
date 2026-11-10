@@ -16,7 +16,6 @@ namespace JoyJoey.Game.Editor
     {
         public const string MenuPrefabPath = "Assets/JoyJoey/Prefabs/MenuPrincipalUI.prefab";
 
-        [MenuItem("Joy Joey/Etapa 2/Preparar menu y pausa")]
         public static void EnsureAssets()
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling || EditorApplication.isUpdating)
@@ -191,15 +190,14 @@ namespace JoyJoey.Game.Editor
             }
         }
 
-        [MenuItem("Joy Joey/Etapa 2/Abrir menu principal")]
+        [MenuItem("Joy Joey/Escenas/Menú principal", false, 1)]
         public static void OpenMenu()
         {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
-            EnsureAssets();
+            if (!File.Exists(WorldBuilder.MenuScenePath)) EnsureAssets();
             EditorSceneManager.OpenScene(WorldBuilder.MenuScenePath);
         }
 
-        [MenuItem("Joy Joey/Etapa 2/Compilar juego Windows")]
         public static void BuildWindows()
         {
             EnsureAssets();

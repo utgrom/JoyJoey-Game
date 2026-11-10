@@ -26,7 +26,7 @@ namespace JoyJoey.Game.Editor
         const string SourceArtPath = @"D:\PROYECTS\JOY JOEY\SPRITES";
         const string SandboxScenePath = "Assets/JoyJoey/Scenes/CircoOnirico_Sandbox.unity";
 
-        [MenuItem("Joy Joey/Etapa 1/Crear elementos faltantes")]
+        [MenuItem("Joy Joey/Crear assets faltantes/Del juego")]
         public static void EnsureAssets()
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode)
@@ -369,20 +369,18 @@ namespace JoyJoey.Game.Editor
                 EditorBuildSettings.scenes = scenes;
         }
 
-        [MenuItem("Joy Joey/Etapa 1/Abrir nivel prototipo")]
+        [MenuItem("Joy Joey/Escenas/Nivel prototipo", false, 2)]
         public static void OpenLevel() => Open(LevelScenePath);
-        [MenuItem("Joy Joey/Etapa 1/Abrir arranque")]
+        [MenuItem("Joy Joey/Escenas/Arranque", false, 0)]
         public static void OpenBootstrap() => Open(BootstrapScenePath);
-        [MenuItem("Joy Joey/Etapa 1/Abrir base de menu")]
         public static void OpenMenu() => Open(MenuScenePath);
         static void Open(string path)
         {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
-            EnsureAssets();
+            if (!File.Exists(path)) EnsureAssets();
             EditorSceneManager.OpenScene(path);
         }
 
-        [MenuItem("Joy Joey/Etapa 1/Compilar prototipo Windows")]
         public static void BuildWindows()
         {
             EnsureAssets();

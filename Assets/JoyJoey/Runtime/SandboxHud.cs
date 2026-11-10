@@ -1,4 +1,5 @@
 using System;
+using JoyJoey.Game.UI;
 using UnityEngine;
 
 namespace JoyJoey.Sandbox
@@ -10,6 +11,17 @@ namespace JoyJoey.Sandbox
         GUIStyle _title, _heading, _body, _small, _number, _button, _label, _mono;
         Font _font;
         float _width, _height;
+        MenuInputFamily _promptFamily;
+        bool GamepadPrompts => _promptFamily != MenuInputFamily.KeyboardMouse;
+        static readonly (ActionId Action, string Caption, string Help)[] CombatPrompts =
+        {
+            (ActionId.Jump, "Salto", "Salto · mantener para subir más"),
+            (ActionId.Basic, "Básico", "Básico · pulsar, mantener o repetir"),
+            (ActionId.Rag, "Rag", "Ataque Rag · mantener para cargar"),
+            (ActionId.Trick, "Trick", "Trick / reposicionamiento"),
+            (ActionId.Dash, "Dash", "Dash en suelo y aire"),
+            (ActionId.Transform, "Traje", "Entrar o salir del traje")
+        };
         static readonly Color Muted = new Color(.56f, .65f, .72f);
         static readonly Color Pale = new Color(.9f, .95f, .97f);
         static readonly Color CardColor = new Color(.055f, .085f, .13f, .96f);
@@ -55,6 +67,12 @@ namespace JoyJoey.Sandbox
             GUI.matrix = Matrix4x4.Scale(new Vector3(scale, scale, 1));
             _width = Screen.width / scale;
             _height = Screen.height / scale;
+            _promptFamily = _runner.InputDevice switch
+            {
+                "MANDO PS" => MenuInputFamily.PlayStation,
+                "MANDO" => MenuInputFamily.Xbox,
+                _ => MenuInputFamily.KeyboardMouse
+            };
             var sim = _runner.Simulation;
             float margin = 24;
             Label(margin, 20, 360, 32, "JOY JOEY  /  COMBAT LAB", _title);
@@ -74,12 +92,18 @@ namespace JoyJoey.Sandbox
             Color ragColor = sim.SelectedRag == RagStyle.Strongman ? new Color(1, .70f, .27f) : sim.SelectedRag == RagStyle.Jester ? new Color(.77f, .50f, 1) : new Color(.38f, .70f, 1);
             Panel(x2, 82, cardWidth, 103, ragColor);
             Label(x2 + 16, 95, cardWidth - 105, 20, sim.SelectedRag.ToString().ToUpperInvariant(), _heading);
-            Label(x2 + cardWidth - 100, 95, 84, 20, sim.Transformed ? "TRAJE ACTIVO" : "Q / E  ·  L2 / R2", _small, TextAnchor.UpperRight);
+            if (sim.Transformed) Label(x2 + cardWidth - 100, 95, 84, 20, "TRAJE ACTIVO", _small, TextAnchor.UpperRight);
+            else
+            {
+                DrawActionIcon(x2 + cardWidth - 90, 93, 34, 22, ActionId.PreviousSuit);
+                DrawActionIcon(x2 + cardWidth - 52, 93, 34, 22, ActionId.NextSuit);
+            }
             Label(x2 + 16, 124, 75, 25, "FUN", _body);
             Label(x2 + cardWidth - 89, 120, 73, 30, sim.Fun.ToString("0") + "%", _body, TextAnchor.UpperRight);
             Fill(new Rect(x2 + 66, 127, cardWidth - 157, 10), new Color(.14f, .19f, .24f));
             Fill(new Rect(x2 + 66, 127, (cardWidth - 157) * Mathf.Clamp01(sim.Fun / 100), 10), ragColor);
-            Label(x2 + 16, 153, cardWidth - 32, 18, sim.Transformed ? "H / L1 para salir · FUN se consume" : "H / L1 transforma · golpear genera FUN", _small);
+            DrawActionIcon(x2 + 16, 150, 34, 22, ActionId.Transform);
+            Label(x2 + 56, 150, cardWidth - 72, 22, sim.Transformed ? "Salir · FUN se consume" : "Transformar · golpear genera FUN", _small, TextAnchor.MiddleLeft);
 
             Panel(x3, 82, cardWidth, 103, SandboxRunner.DummyColor);
             Label(x3 + 16, 95, 240, 20, "DUMMY · "+sim.TargetProfile.DisplayName.ToUpperInvariant(), _heading);
@@ -98,7 +122,7 @@ namespace JoyJoey.Sandbox
             else
             {
                 Label(_width - 344, 207, 320, 20, "RUTA PARA EMPEZAR", _heading, TextAnchor.UpperRight);
-                Label(_width - 344, 234, 320, 56, "J → J → S + J mantenido\nJ en aire → K", _body, TextAnchor.UpperRight);
+                Label(_width - 374, 234, 350, 56, "Dos básicos → abajo + básico mantenido\nBásico en el aire → Rag", _body, TextAnchor.UpperRight);
             }
 
             DrawWorldLabels();
@@ -152,8 +176,16 @@ namespace JoyJoey.Sandbox
             float y = _height - 95;
             Fill(new Rect(0, y - 9, _width, 104), new Color(.036f, .054f, .085f, .97f));
             Fill(new Rect(24, y - 9, _width - 48, 1), new Color(.2f, .29f, .34f));
-            string controls = _width < 1300 ? "WASD mover   Space salto   J / □ básico   K / △ Rag   L / ○ trick   Shift / R1 dash   H / L1 traje" : "WASD / stick  mover    Space / ×  salto    J / □  básico    K / △  Rag    L / ○  trick    Shift / R1  dash    H / L1  traje";
-            Label(24, y + 4, _width - 48, 22, controls, _body);
+            float slot = Mathf.Min(132, (_width - 48) / (CombatPrompts.Length + 1));
+            DrawMovementIcons(24, y + 1);
+            Label(102, y + 1, slot - 78, 26, "Mover", _body, TextAnchor.MiddleLeft);
+            for (int i = 0; i < CombatPrompts.Length; i++)
+            {
+                float x = 24 + slot * (i + 1);
+                var prompt = CombatPrompts[i];
+                DrawActionIcon(x, y + 1, 46, 26, prompt.Action);
+                Label(x + 50, y + 1, slot - 50, 26, prompt.Caption, _body, TextAnchor.MiddleLeft);
+            }
             Label(24, y + 38, Mathf.Max(200, _width - 510), 34, "Las continuaciones dependen de alcance, alturas y tiempos · F6 ligero/pesado", _small);
             float start = _width - 454;
             if (Button(start, y + 36, 83, 29, "R  RESET")) _runner.ResetPractice();
@@ -173,29 +205,63 @@ namespace JoyJoey.Sandbox
             if (Button(x + width - 165, y + 25, 135, 32, "F1  CERRAR")) _runner.ToggleHelp();
             float left = x + 30, right = x + width * .51f, col = width * .45f;
             Label(left, y + 114, col, 24, "CONTROLES", _heading);
-            Label(left, y + 148, col, 188,
-                "WASD / stick o D-pad     Movimiento y dirección\n" +
-                "Space / ×                         Salto · mantener = más altura\n" +
-                "J / □                                Básico · tap / hold / repetir\n" +
-                "K / △                               Ataque Rag · mantener carga\n" +
-                "L / ○                                Trick / reposicionamiento\n" +
-                "Shift / R1                          Dash en suelo y aire\n" +
-                "H / L1                               Entrar / salir del traje\n" +
-                "Q, E / L2, R2                     Ciclar Rag fuera del traje", _body);
+            DrawMovementIcons(left, y + 145);
+            Label(left + 82, y + 145, col - 82, 26, "Movimiento horizontal", _body, TextAnchor.MiddleLeft);
+            for (int i = 0; i < CombatPrompts.Length; i++)
+            {
+                float rowY = y + 145 + 25 * (i + 1);
+                var prompt = CombatPrompts[i];
+                DrawActionIcon(left, rowY, 72, 25, prompt.Action);
+                Label(left + 82, rowY, col - 82, 25, prompt.Help, _body, TextAnchor.MiddleLeft);
+            }
+            DrawActionIcon(left, y + 320, 34, 25, ActionId.PreviousSuit);
+            DrawActionIcon(left + 38, y + 320, 34, 25, ActionId.NextSuit);
+            Label(left + 82, y + 320, col - 82, 25, "Ciclar Rag fuera del traje", _body, TextAnchor.MiddleLeft);
             Label(left, y + 355, col, 24, "MOVILIDAD", _heading);
             Label(left, y + 388, col, 135,
-                "Doble salto, salto variable, coyote time y buffer.\nS + salto atraviesa una plataforma fina.\nEn el aire, S acelera la caída. Salta contra una pared.\nCada ataque conserva la inercia que tenga configurada.\nAl terminar el movimiento, vuelve a actuar y reposiciónate.", _body);
+                "Doble salto, salto variable, coyote time y buffer.\nAbajo + salto atraviesa una plataforma fina.\nTambién podés saltar contra una pared.\nCada ataque conserva la inercia que tenga configurada.\nAl terminar un movimiento, podés volver a actuar y reposicionarte.", _body);
 
             Label(right, y + 114, col, 24, "PRIMER COMBO", _heading);
             Label(right, y + 148, col, 105,
-                "1   Acércate al dummy y pulsa J dos veces.\n2   S + J mantenido: launcher, también en whiff.\n3   Suelta S y pulsa J en el aire.\n4   W + K aéreo: disparo que sostiene al enemigo.", _body);
+                "1   Acercate al dummy y usá dos básicos.\n2   Abajo + básico mantenido hace el launcher, incluso en vacío.\n3   Soltá abajo y usá un básico en el aire.\n4   Arriba + Rag en el aire sostiene al enemigo.", _body);
             Label(right, y + 276, col, 24, "TRES RAGS, TRES RITMOS", _heading);
             Label(right, y + 309, col, 96,
-                "STRONGMAN   Golpes pesados y lanzamiento.\nJESTER                Multigolpes para extender juggles.\nILLUSIONIST        Reposición y persecución.\nGenera FUN con golpes; H transforma tu set de básicos.", _body);
+                "STRONGMAN   Golpes pesados y lanzamiento.\nJESTER                Multigolpes para extender juggles.\nILLUSIONIST        Reposición y persecución.\nGenerá FUN con golpes para transformar tu set de básicos.", _body);
             Label(right, y + 429, col, 24, "HERRAMIENTAS DE ENTRENAMIENTO", _heading);
             Label(right, y + 462, col, 89,
                 "R / Select reiniciar     F2 cajas y datos de combate\nF3 dummy quieto/escape/salto   F6 ligero/pesado\nF4 lanzamiento fijo/escalado   F5 cámara lenta\nEsc / Start pausa     . un frame", _body);
             Label(x + 30, y + height - 39, width - 60, 22, "El rival terrestre es vulnerable en stun o en aire. Los cierres alejan/derriban; no hay bloqueos de combo ocultos.", _small);
+        }
+
+        void DrawActionIcon(float x, float y, float width, float height, ActionId action)
+        {
+            string name = action.ToString();
+            var sprite = InputPromptSprites.Resolve(GameplayControls.ActionPath(name, GamepadPrompts), _promptFamily);
+            if (sprite)
+            {
+                GUI.DrawTexture(new Rect(x, y, width, height), sprite.texture, ScaleMode.ScaleToFit, true);
+                return;
+            }
+            string label = GameplayControls.ActionLabel(name, GamepadPrompts, _promptFamily == MenuInputFamily.PlayStation) ?? name;
+            Label(x, y, width, height, label, _small, TextAnchor.MiddleCenter);
+        }
+
+        void DrawMovementIcons(float x, float y)
+        {
+            if (GamepadPrompts && GameplayControls.LeftStickDeadzonePercent < 100)
+            {
+                DrawIcon(x, y, 72, 26, "<Gamepad>/leftStick", "Stick");
+                return;
+            }
+            DrawIcon(x, y, 34, 26, GameplayControls.DirectionPath("left", GamepadPrompts), "Izq.");
+            DrawIcon(x + 38, y, 34, 26, GameplayControls.DirectionPath("right", GamepadPrompts), "Der.");
+        }
+
+        void DrawIcon(float x, float y, float width, float height, string controlPath, string fallback)
+        {
+            var sprite = InputPromptSprites.Resolve(controlPath, _promptFamily);
+            if (sprite) GUI.DrawTexture(new Rect(x, y, width, height), sprite.texture, ScaleMode.ScaleToFit, true);
+            else Label(x, y, width, height, fallback, _small, TextAnchor.MiddleCenter);
         }
 
         static string DummyName(DummyMode mode) => mode == DummyMode.Escape ? "Escape" : mode == DummyMode.Jump ? "Salto" : "Quieto";
