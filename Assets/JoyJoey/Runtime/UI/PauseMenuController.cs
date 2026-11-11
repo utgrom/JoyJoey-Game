@@ -136,6 +136,7 @@ namespace JoyJoey.Game.UI
         void Update()
         {
             if (!_gameplayScene || !Session || Session.IsLoading) return;
+            if (CinematicOverlay.CapturesInput) return;
             if (Time.frameCount <= _ignoreInputThroughFrame) return;
             if (Session.IsPaused && !_input.InputReady) return;
             bool escape = Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame;

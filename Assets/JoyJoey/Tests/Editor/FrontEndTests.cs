@@ -81,6 +81,29 @@ namespace JoyJoey.Sandbox.Tests
             runner.Simulation.Player.DashTicks = 5;
             Assert.That(runner.TryGetCheckpoint(out _), Is.False);
         }
+
+        [Test]
+        public void CinematicDestinationMovesTheSimulationAndKeepsJoeysDamageAndFacing()
+        {
+            var runner = Level();
+            var actor = runner.Simulation.Player;
+            actor.Damage = 12;
+            actor.Facing = -1;
+            actor.Grounded = false;
+            actor.Move = runner.Catalog.Find("jab1");
+            actor.Velocity = new Vector2(5, -2);
+
+            Assert.That(runner.TryMoveJoeyTo(new Vector2(4, 0)), Is.False);
+            Assert.That(actor.Position, Is.EqualTo(Vector2.zero));
+            Assert.That(runner.TryMoveJoeyTo(new Vector2(2, 0)), Is.True);
+            Assert.That(actor.Position, Is.EqualTo(new Vector2(2, 0)));
+            Assert.That((Vector2)runner.Player.transform.position, Is.EqualTo(actor.Position));
+            Assert.That(actor.Grounded, Is.True);
+            Assert.That(actor.Velocity, Is.EqualTo(Vector2.zero));
+            Assert.That(actor.Move, Is.Null);
+            Assert.That(actor.Facing, Is.EqualTo(-1));
+            Assert.That(actor.Damage, Is.EqualTo(12));
+        }
     }
 
     public sealed class FrontEndSaveTests

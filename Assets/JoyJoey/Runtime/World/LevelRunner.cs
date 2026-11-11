@@ -137,6 +137,18 @@ namespace JoyJoey.Game
                 !Simulation.IsCharging && IsSafeCheckpoint(point);
         }
 
+        public bool TryMoveJoeyTo(Vector2 point)
+        {
+            if (!IsSafeCheckpoint(point)) return false;
+            Simulation.PlacePlayerOnGround(point);
+            ClearPending();
+            _input?.ClearPending();
+            Player.Render(Simulation.Player);
+            foreach (var camera in FindObjectsByType<LevelCamera>())
+                if (camera.Target == Player.transform) camera.SnapToTarget();
+            return true;
+        }
+
         void EnableInput()
         {
             if (_input == null) _input = new JoyInput();

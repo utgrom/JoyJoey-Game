@@ -64,6 +64,7 @@ namespace JoyJoey.Game.UI
         void Update()
         {
             RefreshState();
+            if (CinematicOverlay.CapturesInput) return;
             if (!IsRevealed)
             {
                 if (_titleNeedsRelease) { if (!AnyButtonHeld()) _titleNeedsRelease = false; return; }

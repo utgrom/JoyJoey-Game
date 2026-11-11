@@ -125,6 +125,20 @@ namespace JoyJoey.Sandbox
             _chargeDirection = Vector2.zero;
             if (charging) LastAction = "CARGA CANCELADA · PAUSA";
         }
+
+        internal void PlacePlayerOnGround(Vector2 position)
+        {
+            int facing = Player.Facing;
+            float damage = Player.Damage;
+            ResetFighter(Player, position);
+            Player.Facing = facing;
+            Player.Damage = damage;
+            CancelActionsForPause();
+            Hitstop = 0;
+            _variableJump = false;
+            _lastBinding = null;
+            _sequenceStep = _sequenceLife = _jabChain = _chainGrace = 0;
+        }
         public void SetEnemyProfile(EnemyProfile profile)
         {
             if(profile==null) return;

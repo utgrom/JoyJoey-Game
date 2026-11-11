@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using JoyJoey.Game.UI;
 using UnityEngine;
 
 namespace JoyJoey.Sandbox
@@ -347,6 +348,7 @@ namespace JoyJoey.Sandbox
         void OnGUI()
         {
             var session = JoyJoey.Game.GameSession.Instance;
+            if (CinematicOverlay.CapturesInput) return;
             if (session && (session.IsPaused || session.IsLoading)) return;
             if (_hud != null && Simulation != null) _hud.Draw();
         }

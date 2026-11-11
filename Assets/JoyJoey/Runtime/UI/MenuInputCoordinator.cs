@@ -32,12 +32,12 @@ namespace JoyJoey.Game.UI
         public static MenuInputFamily Family { get; private set; }
         public static bool BackPressedThisFrame => ReadyForActions && (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame || AnyPadButton(pad => pad.buttonEast.wasPressedThisFrame));
         public static bool ApplyPressedThisFrame => ReadyForActions && (Keyboard.current != null && Keyboard.current.kKey.wasPressedThisFrame || AnyPadButton(pad => pad.buttonWest.wasPressedThisFrame));
-        static bool ReadyForActions => !Active || Active.InputReady;
+        static bool ReadyForActions => !CinematicOverlay.CapturesInput && (!Active || Active.InputReady);
 
         EventSystem _system;
         InputSystemUIInputModule _module;
         InputActionAsset _sourceActions, _ownedActions;
-        bool _gate, _hintsWired, _preparingActions, _smokeDiagnostics, _controlsDefaults;
+        bool _gate, _hintsWired, _preparingActions, _smokeDiagnostics, _controlsDefaults, _cinematicModal;
         float _configuredDeadzone;
         Vector2 _mousePosition;
         readonly Dictionary<int, Vector4> _padSticks = new Dictionary<int, Vector4>();
@@ -68,6 +68,7 @@ namespace JoyJoey.Game.UI
             Active = this;
             GameplayControls.Changed += RefreshLeftStickConfiguration;
             RefreshLeftStickConfiguration();
+            if (CinematicOverlay.CapturesInput) { SuspendForCinematic(); return; }
             if (_ownedActions) _ownedActions.Enable();
             _mousePosition = Mouse.current != null ? Mouse.current.position.ReadValue() : Vector2.zero;
             RememberSticks();
@@ -147,6 +148,12 @@ namespace JoyJoey.Game.UI
         void Update()
         {
             if (!Application.isPlaying || !_system || !_system.isActiveAndEnabled) return;
+            if (CinematicOverlay.CapturesInput) { SuspendForCinematic(); return; }
+            if (_cinematicModal)
+            {
+                _cinematicModal = false;
+                if (InputReady || _gate) BeginReleaseGate();
+            }
             TraceSmokeInput("before");
             Active = this;
             RememberSelection();
@@ -163,6 +170,17 @@ namespace JoyJoey.Game.UI
                 UpdatePointerShield();
             }
             TraceSmokeInput("after");
+        }
+
+        void SuspendForCinematic()
+        {
+            _cinematicModal = true;
+            // Keep the menu's requested readiness while retiring its actual input module.
+            // On exit only menus that were listening (or waiting to listen) are rearmed.
+            if (_ownedActions && _ownedActions.enabled) _ownedActions.Disable();
+            if (_module && _module.enabled) _module.enabled = false;
+            _system.sendNavigationEvents = false;
+            if (PointerShield) PointerShield.SetActive(false);
         }
         void LateUpdate() { if (Application.isPlaying) { RememberSelection(); TraceSmokeInput("late"); } }
         void TraceSmokeInput(string phase)
@@ -323,7 +341,7 @@ namespace JoyJoey.Game.UI
         { var l = StickMenuInput.ReadLeftMenuVector(pad); var r = pad.rightStick.ReadValue(); return new Vector4(l.x, l.y, r.x, r.y); }
         static bool AnyPadButton(Func<Gamepad, bool> condition)
         { foreach (var pad in Gamepad.all) if (condition(pad)) return true; return false; }
-        static bool PadPressed(Gamepad p) => p.buttonSouth.wasPressedThisFrame || p.buttonEast.wasPressedThisFrame ||
+        internal static bool PadPressed(Gamepad p) => p.buttonSouth.wasPressedThisFrame || p.buttonEast.wasPressedThisFrame ||
             p.buttonWest.wasPressedThisFrame || p.buttonNorth.wasPressedThisFrame || p.startButton.wasPressedThisFrame ||
             p.selectButton.wasPressedThisFrame || p.leftShoulder.wasPressedThisFrame || p.rightShoulder.wasPressedThisFrame ||
             p.leftTrigger.wasPressedThisFrame || p.rightTrigger.wasPressedThisFrame || p.leftStickButton.wasPressedThisFrame ||
@@ -391,14 +409,14 @@ namespace JoyJoey.Game.UI
         void WireHints()
         {
             if (_hintsWired || !FooterBackButton || !FooterConfirmButton || !FooterApplyButton) return;
-            FooterBackButton.onClick.AddListener(() => { if (InputReady) BackRequested?.Invoke(); });
-            FooterApplyButton.onClick.AddListener(() => { if (InputReady) ApplyRequested?.Invoke(); });
+            FooterBackButton.onClick.AddListener(() => { if (InputReady && !CinematicOverlay.CapturesInput) BackRequested?.Invoke(); });
+            FooterApplyButton.onClick.AddListener(() => { if (InputReady && !CinematicOverlay.CapturesInput) ApplyRequested?.Invoke(); });
             FooterConfirmButton.onClick.AddListener(ConfirmSelected);
             _hintsWired = true;
         }
         void ConfirmSelected()
         {
-            if (!InputReady || !_system || !ValidForScope(_lastContentSelection)) return;
+            if (!InputReady || CinematicOverlay.CapturesInput || !_system || !ValidForScope(_lastContentSelection)) return;
             ExecuteEvents.Execute(_lastContentSelection, new BaseEventData(_system), ExecuteEvents.submitHandler);
         }
         void RefreshHints()

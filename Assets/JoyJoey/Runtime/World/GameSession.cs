@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Linq;
+using JoyJoey.Game.Cinematics;
 using JoyJoey.Game.UI;
 using JoyJoey.Sandbox;
 using UnityEngine;
@@ -18,7 +19,8 @@ namespace JoyJoey.Game
         public bool HasSavedGame => _saved != null;
         public bool IsPaused { get; private set; }
         public bool IsLoading { get; private set; }
-        public bool BlocksGameplay => IsPaused || IsLoading || _waitForRelease;
+        public bool BlocksGameplay => IsPaused || IsLoading || _waitForRelease || CutscenePlayer.Active;
+        public LevelRunner ActiveLevel => _level;
         public string LastError { get; private set; } = "";
         public event Action StateChanged;
         public SaveStore Store { get; private set; }
@@ -26,6 +28,7 @@ namespace JoyJoey.Game
         LevelRunner _level;
         bool _campaignRequested, _campaignActive, _waitForRelease, _dirty;
         float _nextSaveTime, _unpausedTimeScale = 1;
+        float? _timeScaleBeforeCutscene;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ClearStatics() => Instance = null;
@@ -50,18 +53,21 @@ namespace JoyJoey.Game
             Store.TryLoad(out _saved, out string message);
             LastError = message;
             SceneManager.sceneLoaded += SceneLoaded;
+            CutscenePlayer.ActiveChanged += CutsceneChanged;
             JoyJoey.Game.Audio.GameAudio.EnsureExists();
             JoyJoey.Game.Display.GameDisplay.EnsureExists();
             var prefab = Resources.Load<GameObject>("Game/PauseUI");
             if (prefab) Instantiate(prefab, transform);
+            if (CutscenePlayer.Active) CutsceneChanged(CutscenePlayer.Active);
         }
 
         void SceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            if (mode == LoadSceneMode.Additive) return;
             _level = null;
             _campaignActive = false;
             IsPaused = false;
-            Time.timeScale = 1;
+            Time.timeScale = CutscenePlayer.Active ? 0 : 1;
             Notify();
         }
 
@@ -96,7 +102,7 @@ namespace JoyJoey.Game
         void Update()
         {
             if (_waitForRelease && !InputHeld()) _waitForRelease = false;
-            if (!_campaignActive || !_level || IsPaused || IsLoading) return;
+            if (!_campaignActive || !_level || BlocksGameplay) return;
             CaptureSafePosition();
             if (_dirty && Time.unscaledTime >= _nextSaveTime)
             {
@@ -128,10 +134,19 @@ namespace JoyJoey.Game
             return true;
         }
 
+        public bool TryGetProgressFlag(string flag, out bool isSet)
+        {
+            isSet = false;
+            if (!_campaignActive || _campaign?.ProgressFlags == null ||
+                string.IsNullOrWhiteSpace(flag) || flag.Length > 256) return false;
+
+            isSet = Array.IndexOf(_campaign.ProgressFlags, flag) >= 0;
+            return true;
+        }
+
         public void SetProgressFlag(string flag)
         {
-            if (!_campaignActive || string.IsNullOrWhiteSpace(flag) || flag.Length > 256 ||
-                _campaign.ProgressFlags.Contains(flag)) return;
+            if (!TryGetProgressFlag(flag, out bool isSet) || isSet) return;
             _campaign.ProgressFlags = _campaign.ProgressFlags.Concat(new[] { flag }).ToArray();
             _dirty = true;
             SaveCampaign();
@@ -158,6 +173,13 @@ namespace JoyJoey.Game
             _pendingResume = null;
             StartCoroutine(Load(MainMenuScene));
         }
+
+        public void TravelToScene(string sceneName)
+        {
+            if (IsLoading || CutscenePlayer.Active || string.IsNullOrWhiteSpace(sceneName) || !SaveCampaign()) return;
+            StartCoroutine(Load(sceneName));
+        }
+
         IEnumerator Load(string sceneName)
         {
             if (!Application.CanStreamedLevelBeLoaded(sceneName))
@@ -175,7 +197,7 @@ namespace JoyJoey.Game
 
         public void SetPaused(bool paused)
         {
-            if (IsLoading || IsPaused == paused) return;
+            if (IsLoading || CutscenePlayer.Active || IsPaused == paused) return;
             if (paused)
             {
                 SaveCampaign();
@@ -186,9 +208,30 @@ namespace JoyJoey.Game
             // Scene entry has its own release gate. Resuming a pause never blocks movement:
             // each input owner cancels action intent and rearms held buttons independently.
             _waitForRelease = false;
+            SetRunnerInputPaused(paused);
+            Notify();
+        }
+
+        void CutsceneChanged(CutscenePlayer player)
+        {
+            if (player)
+            {
+                _timeScaleBeforeCutscene ??= Time.timeScale;
+                Time.timeScale = 0;
+            }
+            else if (_timeScaleBeforeCutscene.HasValue)
+            {
+                Time.timeScale = _timeScaleBeforeCutscene.Value;
+                _timeScaleBeforeCutscene = null;
+            }
+            SetRunnerInputPaused(BlocksGameplay);
+            Notify();
+        }
+
+        static void SetRunnerInputPaused(bool paused)
+        {
             foreach (var level in FindObjectsByType<LevelRunner>()) level.SetGameplayPaused(paused);
             foreach (var sandbox in FindObjectsByType<SandboxRunner>()) sandbox.SetGameplayPaused(paused);
-            Notify();
         }
 
         public void QuitGame()
@@ -206,6 +249,11 @@ namespace JoyJoey.Game
         void Notify() => StateChanged?.Invoke();
         void OnApplicationFocus(bool focus)
         {
+            if (!focus && CutscenePlayer.Active)
+            {
+                CutscenePlayer.Active.Pause();
+                return;
+            }
             if (!focus && !IsLoading && (SceneManager.GetActiveScene().name == CampaignScene || SceneManager.GetActiveScene().name == SandboxScene))
             {
                 // Native verification explicitly opts into background input; normal play pauses on focus loss.
@@ -222,6 +270,7 @@ namespace JoyJoey.Game
         {
             SceneManager.sceneLoaded -= SceneLoaded;
             if (Instance != this) return;
+            CutscenePlayer.ActiveChanged -= CutsceneChanged;
             Time.timeScale = 1;
             Instance = null;
         }

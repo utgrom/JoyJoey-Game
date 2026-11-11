@@ -107,6 +107,7 @@ namespace JoyJoey.Game.UI
 
         void Update()
         {
+            if (CinematicOverlay.CapturesInput) return;
             if (IsCapturing) { UpdateCapture(); return; }
             var family = MenuInputCoordinator.Family;
             if (GamepadProfile != (family != MenuInputFamily.KeyboardMouse))
